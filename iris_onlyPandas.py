@@ -12,15 +12,15 @@ def closest_row(index, dataFrame, show_range):
 # opening iris data
 dataFrame = pd.read_csv("iris.csv.txt")
 
-# mean, max and min of each column
+# mean, max and min of each column (a, b)
 print(dataFrame.mean(), "\n")
 print(dataFrame.iloc[:, :-1].max(), "\n")
 print(dataFrame.iloc[:, :-1].min(), "\n")
 
-# 10 rows with lower sum
+# 10 rows with lower sum (c)
 print(dataFrame.sum(axis=1, numeric_only=True).sort_values(ascending=True).head(10), '\n')
 
-# closest line(s) of nth line
+# closest line(s) of nth line (d, e ,f)
 list_of_ranges = [5, 3, 1]
 for rnge in list_of_ranges:
     print(closest_row(12, dataFrame, rnge), '\n')
