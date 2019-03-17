@@ -1,13 +1,24 @@
 import pandas as pd
 import numpy as np
 
-
 # Part 1: Data Basic Operations
 def closest_row(index, dataFrame, show_range):
     line = dataFrame.iloc[index, :-1].tolist()
     dataFrame['euc_distance'] = np.linalg.norm(
         dataFrame.iloc[:, :-1].sub(line), axis=1)
     return dataFrame.sort_values(['euc_distance']).iloc[1:show_range+1]
+
+
+def make_prediction_euclidian(test_data, train_data):
+    right_predictions = 0
+    for i in range(len(test_data.index)):
+        row_of_test = test_data.iloc[i].tolist()
+        train_data['euc_distance'] = np.linalg.norm(
+            train_data.iloc[:, :-1].sub(row_of_test[:-1]), axis=1)
+        if train_data.sort_values(['euc_distance']).iloc[0, -2] == row_of_test[-1]:
+            right_predictions += 1
+        train_data.drop('euc_distance', axis=1, inplace=True)
+    return right_predictions
 
 
 # opening iris data
@@ -30,11 +41,14 @@ for rnge in list_of_ranges:
 
 # Part 2: Predicting Species
 # 1st Task - Mix Data
-
 dataFrame = dataFrame.sample(frac=1).reset_index(drop=True)
 
 # 2nd Task - Separe Training and Test Data (2/1)
 train_data, test_data = dataFrame[:100], dataFrame[100:].reset_index(drop=True)
 
-print(train_data)
-print(test_data)
+# 3rd Task - Make Predictions Based on Euc. Distance
+pd.options.mode.chained_assignment = None
+print("Number of right predictions:",
+      make_prediction_euclidian(test_data, train_data))
+
+# 4th Task - Make Predictions Based on Sin.
