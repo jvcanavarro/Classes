@@ -1,9 +1,6 @@
 import pandas as pd
 import numpy as np
 
-def mix_data(dataFrame):
-     # dataFrame.sample(frac=1).reset_index(drop=True).iloc[:100], dataFrame.sample(frac=1).reset_index(drop=True).iloc[100:]
-    return dataFrame.sample(100), dataFrame.sample(50)
 
 def euclidian_distance(dataFrame, row):
     return np.linalg.norm(dataFrame.iloc[:, :-1].sub(row[:-1]), axis=1)
@@ -36,9 +33,13 @@ def lowest_distance_rows(index, dataFrame,  euc_prediction, defined_row=None,  n
     if multiple_lines: 
         best_matching_rows = dataFrame.sort_values(
             ['distance']).iloc[1:num_of_rows+1]
-
     dataFrame.drop('distance', axis=1, inplace=True)
+    dataFrame = dataFrame.sample(frac=1).reset_index(drop=True)
     return best_matching_rows
+
+def mix_data(dataFrame):
+    # return dataFrame.sample(frac=1).reset_index(drop=True).iloc[:100], dataFrame.sample(frac=1).reset_index(drop=True).iloc[100:]
+    return dataFrame.sample(100), dataFrame.sample(50)
 
 def right_prediction(possible_predictions, answer):
     if answer in possible_predictions:
@@ -85,5 +86,5 @@ train_data, test_data = dataFrame[:100], dataFrame[100:].reset_index(drop=True)
 for show_range in list_of_ranges:
     print('Actual Range:',show_range)
     print("Euclidian Distance - Number of right predictions: ", make_predictions(test_data, train_data, show_range))
-    # train_data, test_data = mix_data(dataFrame)
+    train_data, test_data = mix_data(dataFrame)
     print("Cosine Similarity - Number of right predictions:",make_predictions(test_data, train_data, show_range, False))
