@@ -6,15 +6,12 @@ def euclidian_distance(dataFrame, row):
     return np.linalg.norm(dataFrame.iloc[:, :-1].sub(row[:-1]), axis=1)
 
 
-def cosine_test(dataFrame, row):
-    return np.dot(dataFrame.iloc[:, :-1], row) / (np.sqrt(np.dot(dataFrame.iloc[:, :-1], dataFrame.iloc[:, :-1])) * np.sqrt(np.dot(row, row)))
-
 def cosine_similarity(dataFrame, row):
     cosine_sim = []
-
     for index in range(len(dataFrame.index)):
         nom = np.sum(np.multiply(row[:-1], dataFrame.iloc[index, :-1].tolist()))
-        denom = np.sqrt(np.sum(np.square(row[:-1]))) * np.sqrt(np.sum(np.square(dataFrame.iloc[index, :-1].tolist())))
+        denom = np.sqrt(np.sum(np.square(
+            row[:-1]))) * np.sqrt(np.sum(np.square(dataFrame.iloc[index, :-1].tolist())))
         cosine_sim.append(1 - (nom / denom))
     return cosine_sim
 
@@ -28,14 +25,12 @@ def lowest_distance_rows(index, dataFrame,  euc_prediction, defined_row=None,  n
     if euc_prediction == True:
         dataFrame['distance'] = euclidian_distance(dataFrame, defined_row)
     else:
-        dataFrame['distance'] = cosine_test(dataFrame, defined_row)
+        dataFrame['distance'] = cosine_similarity(dataFrame, defined_row)
 
     best_matching_rows = dataFrame.sort_values(['distance']).iloc[0, -2]
 
     if multiple_lines: 
-        best_matching_rows = dataFrame.sort_values(
-            ['distance']).iloc[1:num_of_rows+1]
-
+        best_matching_rows = dataFrame.sort_values(['distance']).iloc[1:num_of_rows+1]
     dataFrame.drop('distance', axis=1, inplace=True)
 
     return best_matching_rows
@@ -57,6 +52,7 @@ def make_predictions(test_data, train_data, num_of_rows=1, euclidian_prediction=
             right_predictions += 1
     return right_predictions
 
+
 # opening iris data
 pd.options.mode.chained_assignment = None
 dataFrame = pd.read_csv("iris.csv")
@@ -76,6 +72,7 @@ for show_range in list_of_ranges:
     print(lowest_distance_rows(12, dataFrame, True, None, show_range, True), '\n')
 
 
+# Part 2: Predicting Species
 # 1st Task - Mix Data
 dataFrame = dataFrame.sample(frac=1).reset_index(drop=True)
 
@@ -89,3 +86,4 @@ for show_range in list_of_ranges:
     print("Euclidian Distance - Number of right predictions: ", make_predictions(test_data, train_data, show_range))
     train_data, test_data = mix_data(dataFrame)
     print("Cosine Similarity - Number of right predictions:",make_predictions(test_data, train_data, show_range, False))
+    print()
