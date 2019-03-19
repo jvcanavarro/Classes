@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-# import matplotlib.pyplot as plt
 
 
 def euclidian_distance(dataFrame, row):
@@ -8,15 +7,17 @@ def euclidian_distance(dataFrame, row):
 
 
 def cosine_similarity(dataFrame, row):
-    return 1 - np.dot(dataFrame, row) / (np.sqrt(np.dot(dataFrame, dataFrame)) * np.sqrt(np.dot(row, row)))
+    cosine_sim = []
+    for index in range(len(dataFrame.index)):
+        nom = np.sum(np.multiply(row[:-1], dataFrame.iloc[index, :-1].tolist()))
+        denom = np.sqrt(np.sum(np.square(
+            row[:-1]))) * np.sqrt(np.sum(np.square(dataFrame.iloc[index, :-1].tolist())))
+        cosine_sim.append(1 - (nom / denom))
+    return cosine_sim
 
 
-def plot_ibk_dots():
-    pass
-
-
-def lowest_distance_rows(index, dataFrame,  euc_prediction, defined_row=None,  num_of_rows=1, multiple_lines=False):
-    best_matching_species = []
+def lowest_distance_rows(index, dataFrame,  euc_prediction, defined_row=None,  num_of_rows=1, multiple_lines = False):
+    best_matching_rows = []
 
     if not defined_row:
         defined_row = dataFrame.iloc[index].tolist()
@@ -24,38 +25,30 @@ def lowest_distance_rows(index, dataFrame,  euc_prediction, defined_row=None,  n
     if euc_prediction == True:
         dataFrame['distance'] = euclidian_distance(dataFrame, defined_row)
     else:
-        species = dataFrame['species']
-        dataFrame.drop('species', axis=1, inplace=True)
-        dataFrame['distance'] = dataFrame.apply(cosine_similarity, row=(defined_row[:-1]), axis=1)
-        dataFrame.insert(loc=4, column='species', value=species)
+        dataFrame['distance'] = cosine_similarity(dataFrame, defined_row)
 
-    best_matching_species = dataFrame.sort_values(['distance']).iloc[0, -2]
+    best_matching_rows = dataFrame.sort_values(['distance']).iloc[0, -2]
 
-    if multiple_lines:
-        best_matching_species = dataFrame.sort_values(
-            ['distance']).iloc[1:num_of_rows+1]
-
+    if multiple_lines: 
+        best_matching_rows = dataFrame.sort_values(['distance']).iloc[1:num_of_rows+1]
     dataFrame.drop('distance', axis=1, inplace=True)
 
-    return best_matching_species
+    return best_matching_rows
 
-
-def randomize_data(dataFrame):
+def mix_data(dataFrame):
     dataFrame = dataFrame.sample(frac=1).reset_index(drop=True)
     return dataFrame[:100], dataFrame[100:].reset_index(drop=True)
 
-
-def check_right_prediction(possible_predictions, answer):
+def right_prediction(possible_predictions, answer):
     if answer in possible_predictions:
         return True
     return False
 
-
-def count_predictions(test_data, train_data, num_of_rows, euclidian_prediction=True):
+def make_predictions(test_data, train_data, num_of_rows=1, euclidian_prediction=True):
     right_predictions = 0
     for i in range(len(test_data.index)):
         row_of_test = test_data.iloc[i].tolist()
-        if check_right_prediction(lowest_distance_rows(i, train_data, euclidian_prediction, row_of_test, num_of_rows), row_of_test[-1]):
+        if right_prediction(lowest_distance_rows(i, train_data, euclidian_prediction, row_of_test, num_of_rows), row_of_test[-1]):
             right_predictions += 1
     return right_predictions
 
@@ -79,6 +72,7 @@ for show_range in list_of_ranges:
     print(lowest_distance_rows(12, dataFrame, True, None, show_range, True), '\n')
 
 
+# Part 2: Predicting Species
 # 1st Task - Mix Data
 dataFrame = dataFrame.sample(frac=1).reset_index(drop=True)
 
@@ -87,13 +81,9 @@ train_data, test_data = dataFrame[:100], dataFrame[100:].reset_index(drop=True)
 
 # 3rd Task - Make Predictions Based on Euc. Distance & Cosine Similarity
 
-num_of_right_predictions = []
-
 for show_range in list_of_ranges:
     print('Actual Range:',show_range)
-    print("Euclidian Distance - Number of right predictions: ", count_predictions(test_data, train_data, show_range))
-    train_data, test_data = randomize_data(dataFrame)
-    print("Cosine Similarity - Number of right predictions:",count_predictions(test_data, train_data, show_range, False))
+    print("Euclidian Distance - Number of right predictions: ", make_predictions(test_data, train_data, show_range))
+    train_data, test_data = mix_data(dataFrame)
+    print("Cosine Similarity - Number of right predictions:",make_predictions(test_data, train_data, show_range, False))
     print()
-
-# Plot ?
