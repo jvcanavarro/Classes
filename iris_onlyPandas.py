@@ -15,6 +15,8 @@ def cosine_similarity(dataFrame, row):
         cosine_sim.append(1 - (nom / denom))
     return cosine_sim
 
+def cos2():
+    return round(sum(a*b for a,b in zip(x,y))/(inf+float(rootX2(x)*rootX2(y))),2)
 
 def plot_ibk_dots():
     pass
@@ -95,3 +97,5 @@ for show_range in list_of_ranges:
     num_of_right_predictions.append( evaluate_predictions(dataFrame, test_data, train_data, show_range))
 
 print('Ranges 1/3/5 (euc_dist | cos_sim):', num_of_right_predictions)
+
+# Plot 
