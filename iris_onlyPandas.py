@@ -1,6 +1,14 @@
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
+
+
+inf=float(1e-20)
+def rootX2(x):
+    aux=0
+    for i in range(len(x)):
+	    aux += (x[i])**2
+    return np.sqrt(aux) 
 
 def euclidian_distance(dataFrame, row):
     return np.linalg.norm(dataFrame.iloc[:, :-1].sub(row[:-1]), axis=1)
