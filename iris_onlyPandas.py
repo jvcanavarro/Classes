@@ -34,7 +34,6 @@ def lowest_distance_rows(index, dataFrame,  euc_prediction, defined_row=None,  n
 
     if multiple_lines: 
         best_matching_species = dataFrame.sort_values(['distance']).iloc[1:num_of_rows+1]
-        print(best_matching_species)
     
     dataFrame.drop('distance', axis=1, inplace=True)
 
