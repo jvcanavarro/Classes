@@ -24,10 +24,10 @@ def lowest_distance_rows(index, dataFrame,  euc_prediction, defined_row=None,  n
     if euc_prediction == True:
         dataFrame['distance'] = euclidian_distance(dataFrame, defined_row)
     else:
-        species = dataFrame['species']
-        dataFrame.drop('species', axis=1, inplace=True)
-        dataFrame['distance'] = dataFrame.apply(cosine_similarity, row=(defined_row[:-1]), axis=1)
-        dataFrame.insert(loc=4, column='species', value=species)
+        # species = dataFrame['species']
+        # dataFrame.drop('species', axis=1, inplace=True)
+        dataFrame['distance'] = dataFrame.iloc[:, :-1].apply(cosine_similarity, row=(defined_row[:-1]), axis=1)
+        # dataFrame.insert(loc=4, column='species', value=species)
 
     best_matching_species = dataFrame.sort_values(['distance']).iloc[0, -2]
 
@@ -76,7 +76,7 @@ print(dataFrame.sum(axis=1, numeric_only=True).sort_values(
 
 # closest line(s) of nth line (d, e ,f)
 for show_range in list_of_ranges:
-    print(lowest_distance_rows(12, dataFrame, True, None, show_range, True), '\n')
+    print(lowest_distance_rows(11, dataFrame, False, None, show_range, True), '\n')
 
 
 # 1st Task - Mix Data

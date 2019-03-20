@@ -103,14 +103,48 @@ for question in student_answers:
     if question in answers:
         acc += 1
 
-print("Accuracy:", acc/len(answers))
+print("Accuracy:", acc / len(answers))
 
 print('random.sample(population, k) -> Return a k length list of unique elements chosen from the population sequence. Used for random sampling without replacement.\n')
 print('random.shuffle(x, random) -> Shuffle method takes two parameters. Out of the two random is an optional parameter. Shuffle method used to shuffle the sequence in place. i.e., it changes the position of items in a list. We call it a randomizes the elements of a list in place.\n')
 
-print(list(range(1, 10)))
+print('Range(1,10):',list(range(1, 10)), '\n')
 
 array = [i for i in range(1, 101)]
 array = random.sample(array, 100)
 
 lista1, lista2 = array[30:], array[:30]
+
+random.shuffle(lista1)
+random.shuffle(lista2)
+
+print('Shuffle Lista 1:', lista1, '\n')
+print('Shuffle Lista 2:', lista2, '\n')
+
+# lista1.sort(key=lambda x: x[0])
+# lista1.sort(key=lambda x: x[1])
+# lista1.sort(key=lambda x: x[2])
+print(lista1)
+
+print('A função array.sort() ordena um vetor em ordem crescente ou descrecente (reverse = True).\n')
+print('Na função array.sort(key=lambda x: x[0]), key é uma função que será chamada para transformar a coleção de itens antes dele serem comparados, o paramêtro passado para key deve ser algo que seja callable. Na lista criada elas não conseguem iterar com x[0,1,2], no entanto a ideia seria transformar todos os itens da lista para que eles fossem iguais aos 1,2,3º itens.\n')
+print('Instance-Based Learning: é uma família de algoritmos de aprendizado que compararam novas instâncias de problemas/testes com as vistas em treinamento, ao invés de comparar com as instâncias armazenadas na memória. Um exemplo de algoritmo IBL é k-nearest neighbors.\n')
+print('O ''k'' em IBK significa K-Nearest Neighbors(K-NN), que significa K Vizinhos +Próximos. Nesse caso o K faz relação ao número de vizinhos mais próximos analisados, por exemplo em IBK3 nos procuramos o resultado nos 3 vizinhos mais próximos.\n')
+
+s = [1,2,3,4,1,2,3,3,1,2,3,4,5]
+
+print('Moda S:', moda(s))
+
+print('A moda é necessária quando levamos em conta o conjunto que mais aparece dentro de um DataFrame, já que ela mostra o item que teve maior ocorrência. Desta forma, quando levamos em conta também a relação entre item e dataFrame, a moda é muito útil.\n')
+
+print('A função Counter() retorna os valores de X em dicionários. Os elementos são salvos como as chaves do dicionário e sua contagem (nº de ocorrências) como os valores do dicionário\n')
+
+print('Counter(x).keys():',Counter(x).keys())
+print('Counter(x).value():',Counter(x).values())
+print('Counter(x).items():',Counter(x).items())
+print()
+
+aux = ['aa', 'bb', 'cc', 'dd', 'aa', 'bb', 'cc', 'aa']
+print('Moda [''aa'', ''bb'', ..]:', moda(aux))
+aux = [1,2,3,1,4,5,6,1,2,3,5,6,6,7,8,4,5,6,7]
+print('Moda [1,2,3,..]:', moda(aux))
