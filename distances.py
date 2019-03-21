@@ -1,13 +1,8 @@
 import collections as col
 from collections import Counter
-s=[1,2,3,4,1,2,3,3,1,2,3,4,5]
-print(Counter(s).values())
-print(Counter(s).keys())
-print(Counter(s).items())
-'''ss=Counter(s)
-print(ss.items())
-dict_items([(1, 3), (2, 3), (3, 4), (4, 2), (5, 1)])
-'''
+
+
+
 def moda(s):
     lf=Counter(s).items()
     x=sorted(lf,key=lambda x: x[1])
@@ -44,3 +39,107 @@ def cosV(x,y):
         aux += (x[i]*y[i])
     return aux/(inf+float(rootX2(x)*rootX2(y))) 
 
+
+def euclidean_distance(x,y):
+  
+  return sqrt(sum(pow(a-b,2) for a, b in zip(x, y)))
+  
+print euclidean_distance([0,3,4,5],[7,6,3,-1])
+
+def manhattan_distance(x,y):
+  
+  return sum(abs(a-b) for a,b in zip(x,y))
+  
+print manhattan_distance([10,20,10],[10,20,20])
+
+def nth_root(value, n_root):
+  
+ root_value = 1/float(n_root)
+ return round (Decimal(value) ** Decimal(root_value),3)
+  
+def minkowski_distance(x,y,p_value):
+  
+ return nth_root(sum(pow(abs(a-b),p_value) for a,b in zip(x, y)),p_value)
+  
+print minkowski_distance([0,3,4,5],[7,6,3,-1],3)
+
+def square_rooted(x):
+  
+   return round(sqrt(sum([a*a for a in x])),3)
+  
+def cosine_similarity(x,y):
+  
+ numerator = sum(a*b for a,b in zip(x,y))
+ denominator = square_rooted(x)*square_rooted(y)
+ return round(numerator/float(denominator),3)
+  
+print cosine_similarity([3, 45, 7, 2], [2, 54, 13, 15])
+
+def square_rooted(x):
+  
+   return round(sqrt(sum([a*a for a in x])),3)
+  
+def cosine_similarity(x,y):
+  
+ numerator = sum(a*b for a,b in zip(x,y))
+ denominator = square_rooted(x)*square_rooted(y)
+ return round(numerator/float(denominator),3)
+  
+print cosine_similarity([3, 45, 7, 2], [2, 54, 13, 15])
+
+
+# Class
+
+from math import*
+from decimal import Decimal
+  
+class Similarity():
+  
+  """ Five similarity measures function """
+  
+  def euclidean_distance(self,x,y):
+  
+   """ return euclidean distance between two lists """
+  
+   return sqrt(sum(pow(a-b,2) for a, b in zip(x, y)))
+  
+  def manhattan_distance(self,x,y):
+  
+   """ return manhattan distance between two lists """
+  
+   return sum(abs(a-b) for a,b in zip(x,y))
+  
+  def minkowski_distance(self,x,y,p_value):
+  
+   """ return minkowski distance between two lists """
+  
+   return self.nth_root(sum(pow(abs(a-b),p_value) for a,b in zip(x, y)),p_value)
+  
+  def nth_root(self,value, n_root):
+  
+   """ returns the n_root of an value """
+  
+   root_value = 1/float(n_root)
+   return round (Decimal(value) ** Decimal(root_value),3)
+  
+  def cosine_similarity(self,x,y):
+  
+   """ return cosine similarity between two lists """
+  
+   numerator = sum(a*b for a,b in zip(x,y))
+   denominator = self.square_rooted(x)*self.square_rooted(y)
+   return round(numerator/float(denominator),3)
+  
+  def square_rooted(self,x):
+  
+   """ return 3 rounded square rooted value """
+  
+   return round(sqrt(sum([a*a for a in x])),3)
+  
+  def jaccard_similarity(self,x,y):
+  
+   """ returns the jaccard similarity between two lists """
+  
+   intersection_cardinality = len(set.intersection(*[set(x), set(y)]))
+   union_cardinality = len(set.union(*[set(x), set(y)]))
+   return intersection_cardinality/float(union_cardinality)
