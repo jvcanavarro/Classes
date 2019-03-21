@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 
 def euclidian_distance(dataFrame, row):
@@ -24,10 +25,7 @@ def lowest_distance_rows(index, dataFrame,  euc_prediction, defined_row=None,  n
     if euc_prediction == True:
         dataFrame['distance'] = euclidian_distance(dataFrame, defined_row)
     else:
-        # species = dataFrame['species']
-        # dataFrame.drop('species', axis=1, inplace=True)
         dataFrame['distance'] = dataFrame.iloc[:, :-1].apply(cosine_similarity, row=(defined_row[:-1]), axis=1)
-        # dataFrame.insert(loc=4, column='species', value=species)
 
     best_matching_species = dataFrame.sort_values(['distance']).iloc[0, -2]
 
