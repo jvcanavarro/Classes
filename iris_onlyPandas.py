@@ -1,7 +1,24 @@
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
+import math
+from decimal import Decimal
+
+def jaccard_similarity(x,y):
+    intersection_cardinality = len(set.intersection(*[set(x), set(y)]))
+    union_cardinality = len(set.union(*[set(x), set(y)]))
+    return intersection_cardinality/float(union_cardinality)
+
+def nth_root(value, n_root):
+    root_value = 1/float(n_root)
+    return round(Decimal(value) ** Decimal(root_value), 3)
+
+
+def minkowski_distance(x, y, p_value):
+    return nth_root(sum(pow(abs(a-b), p_value) for a, b in zip(x, y)), p_value)
+
+
+def manhattan_distance(dataFrame, row):
+    return sum(abs(dataFrame - row) for dataFrame, row in zip(dataFrame, row))
 
 
 def euclidian_distance(dataFrame, row):
@@ -10,10 +27,6 @@ def euclidian_distance(dataFrame, row):
 
 def cosine_similarity(dataFrame, row):
     return 1 - np.dot(dataFrame, row) / (np.sqrt(np.dot(dataFrame, dataFrame)) * np.sqrt(np.dot(row, row)))
-
-
-def plot_ibk_dots():
-    pass
 
 
 def lowest_distance_rows(index, dataFrame,  euc_prediction, defined_row=None,  num_of_rows=1, multiple_lines=False):
@@ -94,4 +107,4 @@ for show_range in list_of_ranges:
     print("Cosine Similarity - Number of right predictions:",count_predictions(test_data, train_data, show_range, False))
     print()
 
-# Plot ?
+
