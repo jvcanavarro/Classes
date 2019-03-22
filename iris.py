@@ -3,10 +3,10 @@ import numpy as np
 import math
 from decimal import Decimal
 
-def jaccard_similarity(x,y):
-    intersection_cardinality = len(set.intersection(*[set(x), set(y)]))
-    union_cardinality = len(set.union(*[set(x), set(y)]))
-    return intersection_cardinality/float(union_cardinality)
+def jaccard_similarity(dataFrame, row):
+    intersection_cardinality = len(set.intersection(*[set(dataFrame), set(row)]))
+    union_cardinality = len(set.union(*[set(dataFrame), set(row)]))
+    return 1 - (intersection_cardinality/float(union_cardinality))
 
 def nth_root(value, n_root):
     root_value = 1/float(n_root)
@@ -106,5 +106,3 @@ for show_range in list_of_ranges:
     train_data, test_data = randomize_data(dataFrame)
     print("Cosine Similarity - Number of right predictions:",count_predictions(test_data, train_data, show_range, False))
     print()
-
-
