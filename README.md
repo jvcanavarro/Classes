@@ -1,1 +1,1 @@
-# ai-projects
+# Random University and Personal Projects
