@@ -102,7 +102,9 @@ num_of_right_predictions = []
 
 for show_range in list_of_ranges:
     print('Actual Range:',show_range)
-    print("Euclidian Distance - Number of right predictions: ", count_predictions(test_data, train_data, show_range))
+    # print("Euclidian Distance - Number of right predictions: ", count_predictions(test_data, train_data, show_range))
+    print('Right Predictions - Euclidian Distance:', count_predictions(test_data, train_data, show_range) / 50 * 100,'%')
     train_data, test_data = randomize_data(dataFrame)
-    print("Cosine Similarity - Number of right predictions:",count_predictions(test_data, train_data, show_range, False))
+    # print("Cosine Similarity - Number of right predictions:",count_predictions(test_data, train_data, show_range, False))
+    print('Right Predictions - Cosine Similarity:', count_predictions(test_data, train_data, show_range, False) / 50 * 100,'%')
     print()
