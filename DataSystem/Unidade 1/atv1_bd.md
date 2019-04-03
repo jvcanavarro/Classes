@@ -20,5 +20,5 @@ A maioria dos sistemas de gestão de banco de dados é construída com um modelo
 
  4. Esquema do Banco de Dados: Descrição (textual ou gráfica) da estrutura de um banco de dados de acordo com um determinado modelo de dados. O esquema de um SGBD é definido durante a fase de projeto esperando-se que ele não seja alterado frequentemente. É a estrutura descrita em uma linguagem formal suportada pelo SGBD e refere-se à organização de dados como um diagrama de como um banco de dados é construído.
 
- Instância: 
+Estado e Instância: um estado do Banco de Dados é um conjunto coerente de ocorrências ou instâncias, sendo cada linha da tabela uma instância ou ocorrência da mesma. Podemos considerar o estado de um banco de dados como um snapshot, ou conjunto de instâncias. Em java, existe um padrão de projeto conhecido como Memento, onde são armazenados diferentes estados de um certo objeto com o objeto de uma possível recuperação desse estado mais tarde. O padrão de projeto é muito aplicado em editores de texto, com o famoso Ctrl+Z.
 
