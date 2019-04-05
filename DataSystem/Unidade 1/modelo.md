@@ -1,5 +1,0 @@
-- Aluno: Matrícula, CPF, Nome, Endereço, Nascimento, Nome-Telefone Responsáveis.
-- Professor: Matrícula, CPF, Nome, Endereço, Nascimento, Telefone.
-- Disciplinas: Nome, Carga Horária, Professor.
-- Turma: Número, Turno, Ano, Nº Sala, Disciplinas.
-- Notas:
