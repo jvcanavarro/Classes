@@ -1,5 +1,31 @@
 ## Atividade 02:
 
+-01: Plankalkul foi projetada em 1945, mas sua descrição não foi publicada até 1972.
+
+-02: Pontos Flutuantes, Arrays e Records.
+
+-03: As falta das linguagems de programação de alto nível gerou uma deficiência que foi resolvida através do Short Code, desenvolvido por Mauchly em 1949 para computadores BINAC. Nele as expressões eram codificadas da esquerda para a direita.
+
+-04: Speedcoding foi desenvolvido por Backus em 54 para rodar no IBM 701, convertendo o aparelho em uma calculadora virtual de ponto flutuante com três endereços. O sistema incluía pseudo-instruções para as quatro operações aritméticas com floats.
+
+-05: Nessa epóca, os computadores eram usado unicamente para realizarem operações matemáticas e científicas, ainda não existindo o conceito de computadores para uso doméstico para lazer e realização de tarefas do cotidiano.
+
+-06: Não existia nenhuma maneira de se programar eficientemente e a velocidade do código era a meta principal para os úsuarios, que ja eram restrito a cientistas, na época.
+
+-07: 1957.
+
+-08: Uso limitado a aplicações científicas.
+
+-09: Foram implementados diversos recursos como: loops com condição testada no final (DO), entrada/saída formatada, mas a implementação mais significativa foi a implementação de ifs com expressão aritmética sem instruções de definição de tipos de dados.
+
+-10: A partir do Fortran 2008, com blocos para escopos locais e programação concorrente.
+
+-11: Devido as crescentes areas de processamento de linguagem natural, modelagem do armazenamento e recupuraçõa de informações humanas e a necessidade de mecanizar certos processos inteligentes, como a prova de teoremas.
+
+-12: John MacCarthy, professor da Universidade American MIT, especializado em Inteligência Artificial.
+
+-13: Common LISP, que combina aspectos de diversos dialetos LISP anteriores a linguagens e bibliotecas. A linguagem foi inventada para oferecer linguagem para processamento de listas, a partir das primeiras aplicações de inteligência artificial.
+
 -14: ACM, ou Association for Computing Machinery e GAMM, ou Sociedade para Matemática Aplicada e Mecânica se reuniram em meados de 1958 em Zurique para iniciar as etapas de implementação da nova linguagem.
 
 -15: 1968, com o ALGOL 68, continuação do desenvolvimento do ALGOL 60 otimizada para aplicações científicas, uma versão bem mais poderosa mas menos conhecida. Fonte de diversas novas ideias, apesar da linguagem nunca ter atingido uma grande utilização
@@ -22,7 +48,7 @@
 
 -24: Sistema de Banco de Dados inteligente que usa o processo de inferência para verificar a verdade de consultas através das regras e predicados declarados no escopo do programa.
 
--25: A linguagem Smalltalk foi a primeira implementação completa de uma linguagem orientada a objetos, com abstração de dados, herança e polimorfismo, sendo uma linguagem pioneira no projeto de interface gráfica com o usuário. No smaltalk tudo é objeto, variáveis, constantes, classes e operações.
+-25: A linguagem Smalltalk foi a primeira implementação completa de uma linguagem orientada a objetos, com abstração de dados, herança e polimorfismo, sendo uma linguagem pioneira no projeto de interface gráfica com o usuário. No smaltalk tudo é objeto, variáveis, constantes, classes e operações e curva de aprendizado relativamente pequena, diferenciando das linguangens recorrentes da época.
 
 -26: Abstração de Dados, Herança e Polimorfismo.
 
