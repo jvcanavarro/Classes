@@ -59,7 +59,6 @@ def randomize_data(dataFrame):
 
 def check_right_prediction(possible_predictions, answer):
     if answer in possible_predictions:
-        # print(answer, possible_predictions)
         return True
     return False
 
@@ -73,24 +72,45 @@ def count_predictions(test_data, train_data, num_of_rows, euclidian_prediction=T
     return right_predictions
 
 
-# opening iris/glass/diabetes data
+def calculate_final_results(test_data, train_data, k, euc_distance = True):
+    # euc_hits = count_predictions(test_data, train_data, k)
+    # euc_accuracy = euc_hits / len(test_data) * 100   
+    # train_data, test_data = randomize_data(dataFrame)
+    # cos_hits = count_predictions(test_data, train_data, k, False)
+    # cos_accuracy = cos_hits / len(test_data) * 100
+    result = pd.Series()
+    hits = count_predictions(test_data, train_data, k, euc_distance)
+    misses = len(test_data) - hits
+    accuracy = hits / len(test_data) * 100   
+    return accuracy, hits, misses, 0, 0, 0, euc_distance, k
+
+
 pd.options.mode.chained_assignment = None
 files = ['iris.csv', 'glass.csv', 'diabetes.csv']
-
+columns = ['acc', 'hits', 'misses', 'abserror_mean', 'std_deviation', 'confusion_matrix', 'euclidian_distance', 'KNN']
 knn = [1, 3]
 
-for file_name in files:
-    print('Dataset: ', file_name)
-    dataFrame = pd.read_csv(file_name)
-    dataFrame = dataFrame.sample(frac=1).reset_index(drop=True)
-    train_data, test_data = np.split(dataFrame, [int(.66*len(dataFrame))])
-    for k in knn:
-        acc_euc, acc_cos = []
-        print('Actual Range:',k)
-        acc_euc = count_predictions(test_data, train_data, k) / len(test_data) * 100
-        print('Right Predictions - Euclidian Distance:', acc_euc,'%')
-        train_data, test_data = randomize_data(dataFrame)
-        acc_cos = count_predictions(test_data, train_data, k, False) / len(test_data) * 100
-        print('Right Predictions - Cosine Similarity:', acc_cos,'%')
-        print()
 
+results = pd.DataFrame(columns=columns)
+list_results = [] 
+for file_name in files:
+    print('Dataset: ', file_name, '\n')
+    dataFrame = pd.read_csv(file_name)
+    train_data, test_data = randomize_data(dataFrame)
+    for k in knn:
+        print('K =',k)
+        # euc_predictions = count_predictions(test_data, train_data, k)
+        # euc_accuracy = euc_predictions / len(test_data) * 100
+        # print('Right Predictions - Euclidian Distance:', euc_accuracy,'%')
+        # train_data, test_data = randomize_data(dataFrame)
+        # cos_predictions = count_predictions(test_data, train_data, k, False)
+        # cos_accuracy = cos_predictions / len(test_data) * 100
+        # print('Right Predictions - Cosine Similarity:', cos_accuracy,'%')
+        list_results.append(list(calculate_final_results(test_data, train_data, k)))
+        train_data, test_data = randomize_data(dataFrame)
+        list_results.append(list(calculate_final_results(test_data, train_data, k, False)))
+        print()
+    print('-'*80)
+
+results = pd.DataFrame(data=list_results, columns=columns)
+print(results.head(3))
