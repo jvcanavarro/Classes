@@ -1,4 +1,4 @@
-import pandas as pd
+﻿import pandas as pd
 import numpy as np
 #import math
 #from decimal import Decimal
@@ -73,16 +73,10 @@ def count_predictions(test_data, train_data, num_of_rows, euclidian_prediction=T
 
 
 def calculate_final_results(test_data, train_data, k, euc_distance = True):
-    # euc_hits = count_predictions(test_data, train_data, k)
-    # euc_accuracy = euc_hits / len(test_data) * 100   
-    # train_data, test_data = randomize_data(dataFrame)
-    # cos_hits = count_predictions(test_data, train_data, k, False)
-    # cos_accuracy = cos_hits / len(test_data) * 100
-    result = pd.Series()
     hits = count_predictions(test_data, train_data, k, euc_distance)
     misses = len(test_data) - hits
     accuracy = hits / len(test_data) * 100   
-    return accuracy, hits, misses, 0, 0, 0, euc_distance, k
+    return round(accuracy, 2), hits, misses, 0, 0, 0, euc_distance, k
 
 
 pd.options.mode.chained_assignment = None
@@ -94,23 +88,15 @@ knn = [1, 3]
 results = pd.DataFrame(columns=columns)
 list_results = [] 
 for file_name in files:
+    print('\nProcessing...')
     print('Dataset: ', file_name, '\n')
     dataFrame = pd.read_csv(file_name)
     train_data, test_data = randomize_data(dataFrame)
     for k in knn:
-        print('K =',k)
-        # euc_predictions = count_predictions(test_data, train_data, k)
-        # euc_accuracy = euc_predictions / len(test_data) * 100
-        # print('Right Predictions - Euclidian Distance:', euc_accuracy,'%')
-        # train_data, test_data = randomize_data(dataFrame)
-        # cos_predictions = count_predictions(test_data, train_data, k, False)
-        # cos_accuracy = cos_predictions / len(test_data) * 100
-        # print('Right Predictions - Cosine Similarity:', cos_accuracy,'%')
         list_results.append(list(calculate_final_results(test_data, train_data, k)))
         train_data, test_data = randomize_data(dataFrame)
         list_results.append(list(calculate_final_results(test_data, train_data, k, False)))
-        print()
     print('-'*80)
 
 results = pd.DataFrame(data=list_results, columns=columns)
-print(results.head(3))
+print(results)
