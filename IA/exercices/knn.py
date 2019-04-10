@@ -23,8 +23,8 @@ import numpy as np
 #    return sum(abs(dataFrame - row) for dataFrame, row in zip(dataFrame, row))
 
 
-#def cosine_similarity(dataFrame, row):
-#    return 1 - np.dot(dataFrame, row) / (np.sqrt(np.dot(dataFrame, dataFrame)) * np.sqrt(np.dot(row, row)))
+def cosine_similarity(dataFrame, row):
+    return 1 - np.dot(dataFrame, row) / (np.sqrt(np.dot(dataFrame, dataFrame)) * np.sqrt(np.dot(row, row)))
 
 
 def euclidian_distance(dataFrame, row):
@@ -33,14 +33,13 @@ def euclidian_distance(dataFrame, row):
 
 def lowest_distance_rows(index, dataFrame,  euc_prediction=True, defined_row=None,  num_of_rows=1, multiple_lines=False):
     best_matching_species = []
-    # print(dataFrame)
     if not defined_row:
         defined_row = dataFrame.iloc[index].tolist()
 
     if euc_prediction == True:
         dataFrame['distance'] = euclidian_distance(dataFrame, defined_row)
-    #else:
-        #dataFrame['distance'] = dataFrame.iloc[:, :-1].apply(cosine_similarity, row=(defined_row[:-1]), axis=1)
+    else:
+        dataFrame['distance'] = dataFrame.iloc[:, :-1].apply(cosine_similarity, row=(defined_row[:-1]), axis=1)
 
     best_matching_species = dataFrame.sort_values(['distance']).iloc[0, -2]
 
@@ -60,6 +59,7 @@ def randomize_data(dataFrame):
 
 def check_right_prediction(possible_predictions, answer):
     if answer in possible_predictions:
+        # print(answer, possible_predictions)
         return True
     return False
 
@@ -77,17 +77,20 @@ def count_predictions(test_data, train_data, num_of_rows, euclidian_prediction=T
 pd.options.mode.chained_assignment = None
 files = ['iris.csv', 'glass.csv', 'diabetes.csv']
 
-dataFrame = pd.read_csv("diabetes.csv")
-dataFrame = dataFrame.sample(frac=1).reset_index(drop=True)
-train_data, test_data = np.split(dataFrame, [int(.66*len(dataFrame))])
-
 knn = [1, 3]
-for k in knn:
-    print('Actual Range:',k)
-    # print("Euclidian Distance - Number of right predictions: ", count_predictions(test_data, train_data, k))
-    print('Right Predictions - Euclidian Distance:', count_predictions(test_data, train_data, k) / len(test_data) * 100,'%')
-    train_data, test_data = randomize_data(dataFrame)
-    # print("Cosine Similarity - Number of right predictions:",count_predictions(test_data, train_data, show_range, False))
-    # print('Right Predictions - Cosine Similarity:', count_predictions(test_data, train_data, show_range, False) / 50 * 100,'%')
-    print()
+
+for file_name in files:
+    print('Dataset: ', file_name)
+    dataFrame = pd.read_csv(file_name)
+    dataFrame = dataFrame.sample(frac=1).reset_index(drop=True)
+    train_data, test_data = np.split(dataFrame, [int(.66*len(dataFrame))])
+    for k in knn:
+        acc_euc, acc_cos = []
+        print('Actual Range:',k)
+        acc_euc = count_predictions(test_data, train_data, k) / len(test_data) * 100
+        print('Right Predictions - Euclidian Distance:', acc_euc,'%')
+        train_data, test_data = randomize_data(dataFrame)
+        acc_cos = count_predictions(test_data, train_data, k, False) / len(test_data) * 100
+        print('Right Predictions - Cosine Similarity:', acc_cos,'%')
+        print()
 
