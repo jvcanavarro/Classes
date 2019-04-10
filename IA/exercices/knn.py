@@ -33,7 +33,7 @@ def euclidian_distance(dataFrame, row):
 
 def lowest_distance_rows(index, dataFrame,  euc_prediction=True, defined_row=None,  num_of_rows=1, multiple_lines=False):
     best_matching_species = []
-
+    # print(dataFrame)
     if not defined_row:
         defined_row = dataFrame.iloc[index].tolist()
 
@@ -55,7 +55,7 @@ def lowest_distance_rows(index, dataFrame,  euc_prediction=True, defined_row=Non
 
 def randomize_data(dataFrame):
     dataFrame = dataFrame.sample(frac=1).reset_index(drop=True)
-    return dataFrame[:100], dataFrame[100:].reset_index(drop=True)
+    return np.split(dataFrame, [int(.66*len(dataFrame))])
 
 
 def check_right_prediction(possible_predictions, answer):
@@ -76,23 +76,18 @@ def count_predictions(test_data, train_data, num_of_rows, euclidian_prediction=T
 # opening iris/glass/diabetes data
 pd.options.mode.chained_assignment = None
 files = ['iris.csv', 'glass.csv', 'diabetes.csv']
-# dataFrame = pd.read_csv("iris.csv")
+
+dataFrame = pd.read_csv("diabetes.csv")
+dataFrame = dataFrame.sample(frac=1).reset_index(drop=True)
+train_data, test_data = np.split(dataFrame, [int(.66*len(dataFrame))])
+
 knn = [1, 3]
-
-
-# closest line(s) of nth line (KNN)
-
-# dataFrame = dataFrame.sample(frac=1).reset_index(drop=True)
-# train_data, test_data = dataFrame[:100], dataFrame[100:].reset_index(drop=True)
-
-# for k in knn:
-    # print(lowest_distance_rows(11, dataFrame, True, None, k, True), '\n')
-
-#for show_range in list_of_ranges:
-    # print('Actual Range:',show_range)
-    # print("Euclidian Distance - Number of right predictions: ", count_predictions(test_data, train_data, show_range))
-    # print('Right Predictions - Euclidian Distance:', count_predictions(test_data, train_data, show_range) / 50 * 100,'%')
-    # train_data, test_data = randomize_data(dataFrame)
+for k in knn:
+    print('Actual Range:',k)
+    # print("Euclidian Distance - Number of right predictions: ", count_predictions(test_data, train_data, k))
+    print('Right Predictions - Euclidian Distance:', count_predictions(test_data, train_data, k) / len(test_data) * 100,'%')
+    train_data, test_data = randomize_data(dataFrame)
     # print("Cosine Similarity - Number of right predictions:",count_predictions(test_data, train_data, show_range, False))
     # print('Right Predictions - Cosine Similarity:', count_predictions(test_data, train_data, show_range, False) / 50 * 100,'%')
-    # print()
+    print()
+
