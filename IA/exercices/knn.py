@@ -86,7 +86,7 @@ def calculate_final_results(test_data, train_data, k, file_name, euc_distance = 
 
 
 pd.options.mode.chained_assignment = None
-files = ['iris.csv', 'glass.csv']
+files = ['iris.csv', 'glass.csv', 'diabetes.csv']
 knn = [1, 3]
 
 list_results = [] 
