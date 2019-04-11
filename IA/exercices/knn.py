@@ -86,7 +86,7 @@ def calculate_final_results(test_data, train_data, k, file_name, euc_distance = 
 
 
 pd.options.mode.chained_assignment = None
-files = ['iris.csv', 'glass.csv', 'diabetes.csv']
+files = ['iris.csv', 'glass.csv']
 knn = [1, 3]
 
 list_results = [] 
@@ -119,15 +119,15 @@ weka_error = [100 - x for x in weka_precision]
 x = np.arange(len(weka_precision))
 width = 0.6
 # plt.figure()
-prec = plt.bar(x, weka_precision, width, color='c')
-error = plt.bar(x, weka_error, width, color='r')
+prec = plt.bar(x, weka_precision, width, color='darkslategrey')
+error = plt.bar(x, weka_error, width, color='darkred')
 plt.xlabel('Datasets')
 plt.ylabel('Precision')
 plt.title('Weka')
 plt.xticks(x, ('iris k1', 'iris  k3', 'glass k1', 'glass k3', 'diab. k1', 'diab. k3'))
 plt.legend((prec[0], error[0]), ('Precision', 'Error'))
 plt.show()
-my_knn = results.iloc[:, :-4].plot.bar(rot=0, title='Personal KNN', cmap=plt.get_cmap('inferno'))
+my_knn = results.iloc[:, :-4].plot.bar(rot=0, title='Personal KNN', cmap=plt.get_cmap('viridis'))
 plt.show()
 my_knn = results.iloc[:, :-4].plot.box(rot=0, title='Means')
 plt.show()
