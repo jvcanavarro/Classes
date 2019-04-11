@@ -1,6 +1,11 @@
 ﻿import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
+
+#João Victor da Silva Dias Canavarro e Arthur Takeshi Yoshikawa
+
+# plt.style.use('classic')
+
 #import math
 #from decimal import Decimal
 
@@ -96,28 +101,41 @@ for file_name in files:
         list_results.append(list(calculate_final_results(test_data, train_data, file_name, k, False)))
 
 print('-'*80)
-
+index = [x[-1] for x in list_results]
 columns = ['prec', 'hits', 'misses', 'distance', 'KNN', 'test_length', 'file']
-results = pd.DataFrame(data=list_results, columns=columns)
-print(results)
+results = pd.DataFrame(data=list_results, columns=columns, index=index)
+print('My KNN\n', results)
 print('\nStandard Deviation:', round(results['prec'].std(), 2))
 print('Mean Absolute Error:', round(results['misses'].mean(), 2))
 print('Mean Absolute Deviation', round(results['prec'].mad(), 2))
-print('Accuracy:', round(results['prec'].mean(), 2), '%')
+print('Accuracy:', round(results['prec'].mean(), 2), '%\n')
 # TODO: Confusion Matrix
 
-# iris(k1,k3)-glass(k1,k3)-diabetes(k1,k3)
+
 weka_precision = [96.0784,96.0784,67.1233,63.0137,72.7969,74.7126]
 weka_error = [100 - x for x in weka_precision]
+
+# Plotting
 x = np.arange(len(weka_precision))
 width = 0.6
-plt.figure()
+# plt.figure()
 prec = plt.bar(x, weka_precision, width, color='c')
 error = plt.bar(x, weka_error, width, color='r')
 plt.xlabel('Datasets')
 plt.ylabel('Precision')
 plt.title('Weka')
 plt.xticks(x, ('iris k1', 'iris  k3', 'glass k1', 'glass k3', 'diab. k1', 'diab. k3'))
-# plt.grid(linestyle='--', color='k')
 plt.legend((prec[0], error[0]), ('Precision', 'Error'))
 plt.show()
+my_knn = results.iloc[:, :-4].plot.bar(rot=0, title='Personal KNN', cmap=plt.get_cmap('inferno'))
+plt.show()
+my_knn = results.iloc[:, :-4].plot.box(rot=0, title='Means')
+plt.show()
+
+print('Analisando os Resultados..')
+print('O nosso KNN obteve resultado acima do Weka para o arquivo iris.csv apenas. Obtivemos em média uma precisão 2-3 porcento acima do Weka com esse arquivo.')
+print('Na nossa implementação utilizamos Distância Euclidiana e Similaridade por Cosseno, com ambos obtendo resultados relevantes com o arquivo.')
+print('Entretanto, para os outros arquivos o resultado do algoritmo lazy não foi produtivo, com acurácia muito baixa. Através dos plots é possível perceber a baixa precisão do algoritmo, muito devido à diversidade e a falta de pré-tratamento dos dados utilizados em glass.csv e diabetes.csv')
+print('Por último, é importante comentar sobre a lentidão de cálculo do arquivo diabetes.csv devido à grande quantidade de colunas com números elevados para se aplicar a medição de distância.')
+print('Após a apresentação dos dados temos todas as informações, menos a matriz de confusão que não foi possível calcular, incluindo desvio padrão residual.')
+print()
