@@ -63,7 +63,7 @@ class Graph:
 		adjacentes = self.__graph[vertice]
 		return len(adjacentes) + adjacentes.count(vertice)
 
-	def conexo(self, vertices_encontrados=None, inicial_vertice=None):, 
+	def conexo(self, vertices_encontrados=None, inicial_vertice=None):
 		if vertices_encontrados is None:
 			vertices_encontrados = set()
 		aux_dict = self.__graph
@@ -72,9 +72,9 @@ class Graph:
 			inicial_vertice = vertices[0]
 		vertices_encontrados.add(inicial_vertice)
 		if len(vertices_encontrados) != len(vertices):
-			for vertice in aux_dict[inicial_vertice];
+			for vertice in aux_dict[inicial_vertice]:
 				if vertice not in vertices_encontrados:
-					 if self.conexo(vertices_encontrados, inicial_vertice):
+					if self.conexo(vertices_encontrados, inicial_vertice):
 						return True
 		else:
 			return False
@@ -91,8 +91,8 @@ class Graph:
 		# checar se é conexo
 		vertices_impares = 0
 		for vertice in get_vertices():
-			if vertice_grau(vertice) % 2 == 1 # ímpar
-			vertices_impares += 1
+			if vertice_grau(vertice) % 2 == 1: # ímpar
+				vertices_impares += 1
 		return vertices_impares == 2
 	  
 # graph = {'A': [1,2], 'B': [2,3], 'C': [3,1]}
