@@ -1,5 +1,9 @@
-class Graph:
+import time
 
+# João Victor da Silva Dias Canavarro - 201704940015
+
+class Graph:
+	#TODO: Adicionar Flag pra Grafo Direcionado.
 	def __init__(self, graph=None):
 		"""Inicia o Grafo por meio de um dicionário, fornecido ou não
 		pelo usúario."""
@@ -63,18 +67,34 @@ class Graph:
 		adjacentes = self.__graph[vertice]
 		return len(adjacentes) + adjacentes.count(vertice)
 
-	def conexo(self, vertices_encontrados=None, inicial_vertice=None):
-		if vertices_encontrados is None:
-			vertices_encontrados = set()
+	def dfs(self, inicio, vertices_visitados=None, tempo=False):
+		# TODO: medir tempo e monitorar vértice anterior.
+		start = clock.time()
+
+		if not vertices_visitados:
+			vertices_visitados = set()
+		vertices_visitados.add(inicio)
+		for proximo in self.__graph[inicio] - vertices_visitados:
+			dfs(proximo, vertices_visitados)
+		
+		end = clock.time()
+		if tempo:
+			return vertices_visitados, end - start
+		return vertices_visitados
+
+	def conexo(self, vertices_visitados=None, inicial_vertice=None):
+		if not vertices_visitados:
+			vertices_visitados = set()
 		aux_dict = self.__graph
 		vertices = list(aux_dict.keys())
+		# TODO: Utilizar dfs ao ínvés dessa parte.
 		if not inicial_vertice:
 			inicial_vertice = vertices[0]
-		vertices_encontrados.add(inicial_vertice)
-		if len(vertices_encontrados) != len(vertices):
+		vertices_visitados.add(inicial_vertice)
+		if len(vertices_visitados) != len(vertices):
 			for vertice in aux_dict[inicial_vertice]:
-				if vertice not in vertices_encontrados:
-					if self.conexo(vertices_encontrados, inicial_vertice):
+				if vertice not in vertices_visitados:
+					if self.conexo(vertices_visitados, inicial_vertice):
 						return True
 		else:
 			return False
@@ -92,16 +112,11 @@ class Graph:
 		vertices_impares = 0
 		for vertice in get_vertices():
 			if vertice_grau(vertice) % 2 == 1: # ímpar
-				vertices_impares += 1
+			v	ertices_impares += 1
 		return vertices_impares == 2
-	  
-# graph = {'A': [1,2], 'B': [2,3], 'C': [3,1]}
-graph =  { "a" : ["d"],
-	  "b" : ["c"],
-	  "c" : ["b", "c", "d", "e"],
-	  "d" : ["a", "c"],
-	  "e" : ["c"],
-	  "f" : []
-	}
-my_graph = Graph(graph)
-print(my_graph.get_vertices())
+
+	def show_matrix_format(self):
+		pass
+
+	def show_list_format(self):
+		pass
