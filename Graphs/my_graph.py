@@ -37,6 +37,40 @@ class Graph:
             for vizinho in self.__graph[vertice]:
                 if {vizinho, vertice} not in arestas:
                     arestas.append({vertice, vizinho})
+
+    def __str__(self): # A função print chama essa.
+        aux = "vertices: "
+        for vertice in self.__graph:
+            aux += str(vertice) + " " 
+
+        aux += "\narestas:"
+        for aresta in self.__gerar_arestas():
+            aux += str(edge) + " "
+
+        return aux
+
+    def vertices_isolados(self):
+        graph = self.__graph
+        isolados = []
+        for vertice in graph:
+            print(isolados, vertice)
+            if not graph[vertice]:
+                isolados += [vertice]
+        return isolados
+
+    def vertice_grau(self, vertice):
+        # O grau de um vértice é o número de arestas conectadas à ele.
+        adjacentes = self.__graph[vertice]
+        return len(adjacentes) + adjacentes.count(vertice)
+
+    def conectado(self, vertices_encontrados=None, inicial_vertice=None):, 
+        if vertices_encontrados is None:
+            vertices_encontrados = set()
+        aux_dict = self.__graph
+        vertices = list(aux_dict.keys())
+        if not inicial_vertice:
+            inicial_vertice = vertices[0]
+
       
 # graph = {'A': [1,2], 'B': [2,3], 'C': [3,1]}
 graph =  { "a" : ["d"],
