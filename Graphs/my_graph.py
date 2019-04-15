@@ -24,6 +24,19 @@ class Graph:
         vertice = aresta.pop()
         if aresta:
             vertice2 = aresta.pop()
+        else:
+            vertice2 = vertice
+        if vertice in self.__graph:
+            self.__graph[vertice].append(vertice2)
+        else:
+            self.__graph[vertice] = [vertice2]
+
+    def __gerar_arestas(self):
+        arestas = []
+        for vertice in self.__graph:
+            for vizinho in self.__graph[vertice]:
+                if {vizinho, vertice} not in arestas:
+                    arestas.append({vertice, vizinho})
       
 # graph = {'A': [1,2], 'B': [2,3], 'C': [3,1]}
 graph =  { "a" : ["d"],
