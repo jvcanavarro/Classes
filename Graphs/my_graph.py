@@ -18,6 +18,13 @@ class Graph:
         grafo com uma lista vazia como valor."""
         if vertice not in self.__graph:
             self.__graph[vertice] = []
+
+    def set_aresta(self, aresta):
+        aresta = set(aresta)
+        vertice = aresta.pop()
+        if aresta:
+            vertice2 = aresta.pop()
+      
 # graph = {'A': [1,2], 'B': [2,3], 'C': [3,1]}
 graph =  { "a" : ["d"],
       "b" : ["c"],
