@@ -10,10 +10,10 @@ import numpy as np
 #from decimal import Decimal
 
 
-#def jaccard_similarity(dataFrame, row):
-#    intersection_cardinality = len(set.intersection(*[set(dataFrame), set(row)]))
-#    union_cardinality = len(set.union(*[set(dataFrame), set(row)]))
-#    return 1 - (intersection_cardinality/float(union_cardinality))
+def jaccard_similarity(dataFrame, row):
+    intersection_cardinality = len(set.intersection(*[set(dataFrame), set(row)]))
+    union_cardinality = len(set.union(*[set(dataFrame), set(row)]))
+    return 1 - (intersection_cardinality/float(union_cardinality))
 
 
 #def nth_root(value, n_root):
@@ -45,7 +45,7 @@ def lowest_distance_rows(index, dataFrame,  euc_prediction=True, defined_row=Non
     if euc_prediction == True:
         dataFrame['distance'] = euclidian_distance(dataFrame, defined_row)
     else:
-        dataFrame['distance'] = dataFrame.iloc[:, :-1].apply(cosine_similarity, row=(defined_row[:-1]), axis=1)
+        dataFrame['distance'] = dataFrame.iloc[:, :-1].apply(jaccard_similarity, row=(defined_row[:-1]), axis=1)
 
     best_matching_species = dataFrame.sort_values(['distance']).iloc[0, -2]
 
@@ -63,7 +63,7 @@ def randomize_data(dataFrame):
     return np.split(dataFrame, [int(.66*len(dataFrame))])
 
 
-def check_right_prediction(possible_predictions, answer):
+def right_prediction(possible_predictions, answer):
     return answer in possible_predictions
 
 
@@ -71,7 +71,7 @@ def count_predictions(test_data, train_data, num_of_rows, euclidian_prediction=T
     right_predictions = 0
     for i in range(len(test_data.index)):
         row_of_test = test_data.iloc[i].tolist()
-        if check_right_prediction(lowest_distance_rows(i, train_data, euclidian_prediction, row_of_test, num_of_rows), row_of_test[-1]):
+        if right_prediction(lowest_distance_rows(i, train_data, euclidian_prediction, row_of_test, num_of_rows), row_of_test[-1]):
             right_predictions += 1
     return right_predictions
 
@@ -82,14 +82,14 @@ def calculate_final_results(test_data, train_data, k, file_name, euc_distance = 
     accuracy = hits / len(test_data) * 100
     if euc_distance:
         return round(accuracy, 2), hits, misses, 'euclidian', file_name, len(test_data), k
-    return round(accuracy, 2), hits, misses, 'cosine', file_name, len(test_data), k
+    return round(accuracy, 2), hits, misses, 'jaccard_similarity', file_name, len(test_data), k
 
 
 pd.options.mode.chained_assignment = None
 files = ['iris.csv', 'glass.csv']
 knn = [1, 3]
 
-list_results = [] 
+list_results = []
 for file_name in files:
     print('\nProcessing...')
     print('Dataset: ', file_name, '\n')
