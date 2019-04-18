@@ -66,13 +66,16 @@ def Differential_manchester(inp):
     inp1=list(inp)
     li,lock,pre=[],False,''
     for i in range(len(inp1)):
+        print(inp1[i])
         if inp1[i]==0 and not lock:
+            print('inp1[i]==0 and not lock')
             li.append(-1)
             li.append(-1)
             li.append(1)
             lock=True
             pre='S'
         elif inp1[i]==1 and not lock :
+            print('inp1[i]==1 and not lock')
             li.append(1)
             li.append(1)
             li.append(-1)
@@ -80,15 +83,21 @@ def Differential_manchester(inp):
             pre='Z'
         else:
             if inp1[i]==0:
+                print('inp1[i]==0')
                 if pre=='S':
+                    print('pre==S')
                     li.append(-1);li.append(1)
                 else:
+                    print('else, pre == Z')
                     li.append(1);li.append(-1)
             else:
+                print('inp1[i] != 0')
                 if pre=='Z':
+                    print('pre==Z')
                     pre='S'
                     li.append(-1);li.append(1)
                 else:
+                    print('else')
                     pre='Z'
                     li.append(1);li.append(-1)
     print(li)
@@ -112,27 +121,27 @@ def AMI(inp):
     
 
 def plot(li):
-    plt.subplot(7,1,1)
-    plt.ylabel("Unipolar-NRZ")
-    plt.plot(unipolar(li),color='red',drawstyle='steps-pre')
-    plt.subplot(7,1,2)
-    plt.ylabel("P-NRZ-L")
-    plt.plot(polar_nrz_l(li),color='blue',drawstyle='steps-pre')
-    plt.subplot(7,1,3)
-    plt.ylabel("P-NRZ-I")
-    plt.plot(polar_nrz_i(li),color='green',drawstyle='steps-pre')
-    plt.subplot(7,1,4)
-    plt.ylabel("Polar-RZ")
-    plt.plot(polar_rz(li),color='red',drawstyle='steps-pre')
-    plt.subplot(7,1,5)
-    plt.ylabel("B_Man")
-    plt.plot(Biphase_manchester(li),color='violet',drawstyle='steps-pre')
-    plt.subplot(7,1,6)
+    # plt.subplot(7,1,1)
+    # plt.ylabel("Unipolar-NRZ")
+    # plt.plot(unipolar(li),color='red',drawstyle='steps-pre')
+    # plt.subplot(7,1,2)
+    # plt.ylabel("P-NRZ-L")
+    # plt.plot(polar_nrz_l(li),color='blue',drawstyle='steps-pre')
+    # plt.subplot(7,1,3)
+    # plt.ylabel("P-NRZ-I")
+    # plt.plot(polar_nrz_i(li),color='green',drawstyle='steps-pre')
+    # plt.subplot(7,1,4)
+    # plt.ylabel("Polar-RZ")
+    # plt.plot(polar_rz(li),color='red',drawstyle='steps-pre')
+    # plt.subplot(7,1,5)
+    # plt.ylabel("B_Man")
+    # plt.plot(Biphase_manchester(li),color='violet',drawstyle='steps-pre')
+    # plt.subplot(7,1,6)
     plt.ylabel("Dif_Man")
+    plt.subplot(5,1,1)
     plt.plot(Differential_manchester(li),color='red',drawstyle='steps-pre')
-    plt.subplot(7,1,7)
-    plt.ylabel("A-M-I")
-    plt.plot(AMI(li),color='blue',drawstyle='steps-pre')
+    # plt.ylabel("A-M-I")
+    # plt.plot(AMI(li),color='blue',drawstyle='steps-pre')
     plt.show()
            
 
@@ -142,6 +151,6 @@ def create_random_bit_signal(signal_length=7):
 if __name__=='__main__':
 
     signal_length = int(input('Enter Signal Length: '))
-    li = create_random_bit_signal(signal_length)
-    print('Signal: ',li)
+    # li = create_random_bit_signal(signal_length)
+    li = [0,1,0,0,1,1,0,0,0,1,1]
     plot(li)
