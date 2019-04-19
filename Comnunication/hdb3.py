@@ -2,8 +2,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-string = input("Ingresa la cadena: ")
-string =str(string)
+
+string ='00000000011001100001'
 
 strOutput = []
 strOutputLabel = []
@@ -60,7 +60,7 @@ def output():
 output()
 
 #Graph
-x = np.arange(1, len(strOutput) + 1, 1)
+x = np.arange(1, len(strOutput) + 1)
 
 plt.step(x, strOutput)
 plt.xlabel(strOutputLabel)
