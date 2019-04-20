@@ -4,7 +4,8 @@ import matplotlib.pyplot as plt
 
 
 string ='00000000011001100001'
-
+string = '1100001000000000'
+string = '100110001000000111'
 strOutput = []
 strOutputLabel = []
 def output():
@@ -14,7 +15,9 @@ def output():
     pulsoViolacion = 0
 
     for bit in string:
-        if bit == str(1):
+        # print(bit)
+        if int(bit) == 1:
+            # print('ok')
             if pulsoAnterior == 1:
                 strOutput.append(-1)
                 strOutputLabel.append(-1)
@@ -29,7 +32,8 @@ def output():
                 strOutput.append(bit)
                 strOutputLabel.append(bit)
                 pulsoAnterior = int(bit)
-        elif bit == str(0):
+        elif int(bit) == 0:
+            # print('0')
             contador = contador + 1
             if contador == 4:
                 strOutput.pop()
@@ -60,9 +64,15 @@ def output():
 output()
 
 #Graph
-x = np.arange(1, len(strOutput) + 1)
+x = np.arange(len(strOutput))
+print(strOutput)
+test = []
+for bit in strOutput:
+    test.append(int(bit))
 
-plt.step(x, strOutput)
+# strOutput = [int(bit) for bit in str(strOutput)]
+print(test)
+plt.step(x, test)
 plt.xlabel(strOutputLabel)
 plt.xlim(-1, len(strOutput) + 1)
 plt.ylim(-3, 3)

@@ -21,7 +21,7 @@ def dif_man(signal):
 			dif_man.append(0)
 			dif_man.append(0)
 			dif_man.append(1)
-			start = True
+			start = False
 			pre = 'one'
 		elif signal[i]==1 and start :
 			dif_man.append(1)
@@ -31,7 +31,7 @@ def dif_man(signal):
 			pre = 'zero'
 		else:
 			if signal[i]==0:
-				if pre == 'zero':
+				if pre == 'one':
 					dif_man.append(0);dif_man.append(1)
 				else:
 					dif_man.append(1);dif_man.append(0)
@@ -43,7 +43,7 @@ def dif_man(signal):
 					pre = 'zero'
 					dif_man.append(1);dif_man.append(0)
 
-	return dif_man   
+	return dif_man
 
 
 def hdb3(signal):
@@ -87,25 +87,32 @@ def hdb3(signal):
 		
 	return hdb3
 
+
+def b8zs(signal):
+	pass
+
 signal_length = int(input('Enter Signal Length: '))
 bit_signal = create_random_bit_signal(signal_length)
 # print('Signal: ', bit_signal)
 
 
-bits = '01001100011'
+# bits = '01001100011'
 # bits = '00000000011001100001'
 # bits = ''
+bits = '10100111001'
+bit_signal = [1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+# bit_signal = [int(bit) for bit in str(bits)]
 
-bit_signal = [int(bit) for bit in str(bits)]
-bit_signal.append(bit_signal[-1])
+#bit_signal.append(bit_signal[-1])
 
 data = np.repeat(bit_signal, 2)
+print(data)
 clock = 1 - np.arange(len(data)) % 2
 
-manchester = 1 - np.logical_xor(clock, data)
+manchester = np.logical_xor(clock, data)
 dif_manchester = np.asarray(dif_man(bit_signal[:-1]))
-hdb3 = np.asarray(hdb3(bit_signal))
-b8zs = 0
+hdb3 = np.asarray(hdb3(bit_signal[:-1]))
+b8zs = np.asarray(b8zs(bit_signal))
 
 
 create_axis('x', range(len(bit_signal)), color='.5', linewidth=0.5, linestyle = ":")
@@ -114,11 +121,11 @@ create_axis('y', [0, 2, 5, 7, 9], color='.5', linewidth=0.5, linestyle = ":")
 t = 0.5 * np.arange(len(data) - 1)
 t2 = np.arange(len(hdb3))
 
-plt.step(t, data[:-1] + 9, 'r', linewidth = 1.5, where='pre', label='data')
-plt.step(t, clock[:-1] + 7, 'blue', linewidth = 1.5, where='pre', label='clock')
-plt.step(t2, hdb3 + 5, 'orange', linewidth = 1.5, where='mid', label='hdb3')
+plt.step(t, data[:-1] + 9, 'r', linewidth = 1.5, where='post', label='data')
+plt.step(t, clock[:-1] + 7, 'blue', linewidth = 1.5, where='post', label='clock')
+plt.step(t2, hdb3 + 5, 'orange', linewidth = 1.5, where='post', label='hdb3')
 plt.step(t, dif_manchester[:len(t)] + 2, 'green', linewidth = 1.5, where='pre', label='differential')
-plt.step(t, manchester[:-1], 'black', linewidth = 1.5, where='pre', label='manchester')
+plt.step(t, manchester[:-1], 'black', linewidth = 1.5, where='post', label='manchester')
 
 plt.ylim([-1,11])
 

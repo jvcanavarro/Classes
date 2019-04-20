@@ -152,5 +152,5 @@ if __name__=='__main__':
 
     signal_length = int(input('Enter Signal Length: '))
     # li = create_random_bit_signal(signal_length)
-    li = [0,1,0,0,1,1,0,0,0,1,1]
+    li = bit_signal = [1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     plot(li)
