@@ -120,9 +120,6 @@ dif_manchester = np.asarray(dif_man(bit_signal))
 hdb3 = np.asarray(hdb3(bit_signal))
 b8zs = np.asarray(b8zs(bit_signal))
 
-
-print('hdb3: ', hdb3)
-print('b8zs: ', b8zs)
 create_axis('x', range(len(bit_signal)), color='.5', linewidth=0.5, linestyle = ":")
 create_axis('y', [0, 2, 5, 8, 10, 12], color='.5', linewidth=0.5, linestyle = ":")
 
