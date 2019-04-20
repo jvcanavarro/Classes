@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import random
+
 def create_axis(ax, coordenates, *args, **kwargs):
 	if ax == 'x':
 		for coordenate in coordenates:
@@ -18,119 +18,127 @@ def dif_man(signal):
 	pre = ''
 	for i in range(len(signal)):
 		if signal[i]==0 and start:
-			dif_man.append(0)
-			dif_man.append(0)
-			dif_man.append(1)
+			dif_man.extend([0,0,1])
 			start = False
 			pre = 'one'
 		elif signal[i]==1 and start :
-			dif_man.append(1)
-			dif_man.append(1)
-			dif_man.append(0)
+			dif_man.extend([1,1,0])
 			start = False
 			pre = 'zero'
 		else:
 			if signal[i]==0:
 				if pre == 'one':
-					dif_man.append(0);dif_man.append(1)
+					dif_man.extend([0,1])
 				else:
-					dif_man.append(1);dif_man.append(0)
+					dif_man.extend([1,0])
 			else:
 				if pre == 'zero':
 					pre = 'one'
-					dif_man.append(0);dif_man.append(1)
+					dif_man.extend([0,1])
 				else:
 					pre = 'zero'
-					dif_man.append(1);dif_man.append(0)
+					dif_man.extend([1,0])
 
 	return dif_man
 
 
-def hdb3(signal):
+def hdb3(signal): #consecutive four zeros
 	hdb3 = []
-	acc = 0
-	anterior = 0
-	zeros = 0
-	pulso = 0
+	num_zeros = 0
+	num_ones = 0
+	last_pulse = -1
+
 	for bit in signal:
 		if bit == 1:
-			if anterior == 1:
-				hdb3.append(-1)
-				anterior = -1
-				pulso = -1
-				zeros = zeros + 1
-			elif anterior == -1:
+			if last_pulse == 0 or last_pulse == -1:
 				hdb3.append(1)
-				anterior = 1
-			elif anterior == 0:
-				hdb3.append(bit)
-				anterior = int(bit)
-		elif bit == 0:
-			acc = acc + 1
-			if acc == 4:
-				hdb3.pop()
-				hdb3.pop()
-				hdb3.pop()
-				if zeros % 2 == 0:
-					#B00V
-					pulso = anterior * -1
-					hdb3.extend([pulso,0,0,pulso])
-					zeros +=  1
-					anterior = pulso
-				else:
-					#000V
-					hdb3.extend([0,0,0,pulso])
-					zeros += 1
-				acc = 0
-			else :
-				hdb3.append(bit)
-		
+				last_pulse = 1
+				num_ones += 1
+			else:
+				hdb3.append(-1)
+				last_pulse = -1
+				num_ones += 1
+			num_zeros = 0
+		else:
+			hdb3.append(0)
+			num_zeros += 1
+			if num_zeros == 4:
+				hdb3 = hdb3[:-4]
+				if num_ones % 2 == 0: # even
+					hdb3.extend([last_pulse*-1, 0, 0, last_pulse*-1])
+				else: # odd
+					hdb3.extend([0, 0, 0, last_pulse])
+				num_zeros = 0
+				num_ones = 0
+				last_pulse = hdb3[-1]
+
 	return hdb3
 
 
-def b8zs(signal):
-	pass
+def b8zs(signal): #consecutive eight zeros
+    b8zs = []
+    num_zeros = 0
+    last_pulse = -1
 
-signal_length = int(input('Enter Signal Length: '))
-bit_signal = create_random_bit_signal(signal_length)
-# print('Signal: ', bit_signal)
+    for bit in signal:
+        if bit == 1:
+            if last_pulse == 0 or last_pulse == -1:
+                b8zs.append(1)
+                last_pulse = 1
+            else:
+                b8zs.append(-1)
+                last_pulse = -1
+            num_zeros = 0
+        else:
+            b8zs.append(0)
+            num_zeros += 1
+            if num_zeros == 8:
+                b8zs = b8zs[:-8]
+                if last_pulse >= 0:
+                    b8zs.extend([ 0, 0, 0, 1, -1, 0, -1, 1])
+                else:
+                    b8zs.extend([ 0, 0, 0, -1, 1, 0, 1, -1])
+                num_zeros = 0
+                last_pulse = b8zs[-1]
+
+    return b8zs
 
 
-# bits = '01001100011'
-# bits = '00000000011001100001'
 # bits = ''
-bits = '10100111001'
-bit_signal = [1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-# bit_signal = [int(bit) for bit in str(bits)]
+# bits = '01001100011'
+# bits = '10100111001'
+# bits = '1100001000000000'
+bits = '0000000001100110000'
 
-#bit_signal.append(bit_signal[-1])
+bit_signal = [int(bit) for bit in str(bits)]
+
 
 data = np.repeat(bit_signal, 2)
-print(data)
 clock = 1 - np.arange(len(data)) % 2
-
 manchester = np.logical_xor(clock, data)
-dif_manchester = np.asarray(dif_man(bit_signal[:-1]))
-hdb3 = np.asarray(hdb3(bit_signal[:-1]))
+dif_manchester = np.asarray(dif_man(bit_signal))
+hdb3 = np.asarray(hdb3(bit_signal))
 b8zs = np.asarray(b8zs(bit_signal))
 
 
+print('hdb3: ', hdb3)
+print('b8zs: ', b8zs)
 create_axis('x', range(len(bit_signal)), color='.5', linewidth=0.5, linestyle = ":")
-create_axis('y', [0, 2, 5, 7, 9], color='.5', linewidth=0.5, linestyle = ":")
+create_axis('y', [0, 2, 5, 8, 10, 12], color='.5', linewidth=0.5, linestyle = ":")
 
-t = 0.5 * np.arange(len(data) - 1)
-t2 = np.arange(len(hdb3))
+t = 0.5 * np.arange(len(data))
 
-plt.step(t, data[:-1] + 9, 'r', linewidth = 1.5, where='post', label='data')
-plt.step(t, clock[:-1] + 7, 'blue', linewidth = 1.5, where='post', label='clock')
-plt.step(t2, hdb3 + 5, 'orange', linewidth = 1.5, where='post', label='hdb3')
-plt.step(t, dif_manchester[:len(t)] + 2, 'green', linewidth = 1.5, where='pre', label='differential')
-plt.step(t, manchester[:-1], 'black', linewidth = 1.5, where='post', label='manchester')
+plt.step(t, data + 12, 'r', linewidth = 1.5, where='post', label='data')
+plt.step(t, clock + 10, 'blue', linewidth = 1.5, where='post', label='clock')
+plt.step(np.arange(len(b8zs)), b8zs + 8, 'purple', linewidth = 1.5, where='post', label='b8zs')
+plt.step(np.arange(len(hdb3)), hdb3 + 5, 'orange', linewidth = 1.5, where='post', label='hdb3')
+plt.step(t, dif_manchester[:-1] + 2, 'green', linewidth = 1.5, where='pre', label='differential')
+plt.step(t, manchester, 'black', linewidth = 1.5, where='post', label='manchester')
 
-plt.ylim([-1,11])
+plt.ylim([-1,14])
 
 
-for index, value in enumerate(bit_signal[:-1]):
+for index, value in enumerate(bit_signal):
 	plt.text(index + 0.5, -1, value)
 
 plt.title('Codification')
