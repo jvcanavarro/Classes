@@ -67,8 +67,7 @@ class Graph:
 		adjacentes = self.__graph[vertice]
 		return len(adjacentes) + adjacentes.count(vertice)
 
-	def dfs(self, inicio, vertices_visitados=None, tempo=False):
-		# TODO: medir tempo e monitorar vértice anterior.
+	def dfs(self, inicio, vertices_visitados=None, tempo=True):
 		start = clock.time()
 
 		if not vertices_visitados:
@@ -81,6 +80,21 @@ class Graph:
 		if tempo:
 			return vertices_visitados, end - start
 		return vertices_visitados
+
+	def bfs(self, inicio, vertices_visitados=None, tempo=True):
+		start = clock.time()
+
+		if not vertices_visitados:
+			vertices_visitados = set()
+		fila = [inicio]
+		while fila:
+			vertice_atual = fila.pop(0)
+			if vertice_atual not in vertices_visitados:
+				vertices_visitados.add(vertice_atual)
+				fila.extend(self.graph[vertice_atual] - vertices_visitados)
+		end = clock.time()
+		return vertices_visitados
+
 
 	def conexo(self, vertices_visitados=None, inicial_vertice=None):
 		if not vertices_visitados:
@@ -100,14 +114,14 @@ class Graph:
 			return False
 		return False
 
-	def is_euleriano(self):
+	def is_eulerian(self):
 		# checar se é conexo
 		for vertice in get_vertices():
 			if vertice_grau(vertice) % 2 == 1: # ímpar
 				return False
 		return True
 
-	def is_open_euleriano(self):
+	def is_open_eulerian(self):
 		# checar se é conexo
 		vertices_impares = 0
 		for vertice in get_vertices():
