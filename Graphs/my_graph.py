@@ -1,5 +1,3 @@
-import time
-
 # João Victor da Silva Dias Canavarro - 201704940015
 
 class Graph:
@@ -67,52 +65,37 @@ class Graph:
 		adjacentes = self.__graph[vertice]
 		return len(adjacentes) + adjacentes.count(vertice)
 
-	def dfs(self, inicio, vertices_visitados=None, tempo=True):
-		start = clock.time()
-
+	def dfs(self, inicio, vertices_visitados=None, tempo=0):
 		if not vertices_visitados:
 			vertices_visitados = set()
+
 		vertices_visitados.add(inicio)
+
 		for proximo in self.__graph[inicio] - vertices_visitados:
-			dfs(proximo, vertices_visitados)
+			dfs(proximo, vertices_visitados, tempo += 1)
 		
-		end = clock.time()
-		if tempo:
-			return vertices_visitados, end - start
-		return vertices_visitados
+		return vertices_visitados, tempo
 
-	def bfs(self, inicio, vertices_visitados=None, tempo=True):
-		start = clock.time()
-
+	def bfs(self, inicio, vertices_visitados=None, tempo=0):
 		if not vertices_visitados:
 			vertices_visitados = set()
+
 		fila = [inicio]
 		while fila:
 			vertice_atual = fila.pop(0)
 			if vertice_atual not in vertices_visitados:
 				vertices_visitados.add(vertice_atual)
 				fila.extend(self.graph[vertice_atual] - vertices_visitados)
-		end = clock.time()
-		return vertices_visitados
+			tempo += 1
+		return vertices_visitados, tempo
 
 
-	def conexo(self, vertices_visitados=None, inicial_vertice=None):
-		if not vertices_visitados:
-			vertices_visitados = set()
-		aux_dict = self.__graph
-		vertices = list(aux_dict.keys())
-		# TODO: Utilizar dfs ao ínvés dessa parte.
-		if not inicial_vertice:
-			inicial_vertice = vertices[0]
-		vertices_visitados.add(inicial_vertice)
-		if len(vertices_visitados) != len(vertices):
-			for vertice in aux_dict[inicial_vertice]:
-				if vertice not in vertices_visitados:
-					if self.conexo(vertices_visitados, inicial_vertice):
-						return True
-		else:
-			return False
-		return False
+	def conexo(self, inicio=None):
+		if not inicio:
+			inicio = self.__graph[0]
+
+		vertices_visitados, _ = dfs(inicio)
+		return len(vertices_visitados) == len(self.__graph)
 
 	def is_eulerian(self):
 		# checar se é conexo
