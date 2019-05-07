@@ -131,13 +131,13 @@ class Graph:
 						vertices.remove(vizinho)
 			componentes.append(vertices_visitados)
 
-	def show_matrix_format(self):
+	def mostra_matriz(self):
 		for i in self.__graph:
 			for j in i:
 				print(j, end=' ')
 			print(' ')
 
-	def show_list_format(self):
+	def mostra_lista(self):
 		for i in range(self.__graph):
 			print('%d: '% (i + 1), end=' ')
 			for j in self.__graph[i]:
