@@ -104,6 +104,8 @@ def b8zs(signal): #consecutive eight zeros
     return b8zs
 
 
+# bits = str(input('Enter the Signal:'))
+
 # bits = ''
 # bits = '01001100011'
 # bits = '10100111001'

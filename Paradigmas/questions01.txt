@@ -1,0 +1,28 @@
+1. Permite a seleção de uma linguagem mais adequada para a solução de um dado problema.
+
+2. C e Assembly.
+
+3. Se a alinguagem possui um grande número de construções é possível que ocorra o uso inadequado de alguns dos recursos oferecidos pela mesma.
+
+4. Significa que o programa executa as suas especificações.
+
+5. INterceptar erros de execução e tomar medidas corretivas.
+
+6. É o principal fator limitante da velocidade dos computadores, também abordada como a velocidade de conexão processador-memória.
+
+7. Proejto de máquina/ sistema operacional, camadas e compilação.
+
+8. A capacidade de definir e usar estruturas ou operações complexas de forma a permitir que os detalhes sejam ignorados.
+
+9. Traduz um programa de alto nível em código de máquina:
+	- Análise sintática,
+	- Análise semântica,
+	- Geração de Código.
+
+10. A facilidade com que os prgramas podem ser movidos a partir de uma implementação para outra.
+
+11. Porque é importante conhecer o básico da arquitetura da linguagem para que seja possível uma melhor utilização da mesma.
+
+12. Fortran, Python, C, C++, Java.
+
+13. Cobal, Object Pascal, Java.

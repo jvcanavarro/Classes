@@ -1,0 +1,31 @@
+Atividade 03: Paradigmas de Linguagem de Programação
+
+01. Amarração(binding) é uma associação entre entidade de programação. A forma que uma linguagem de programação realiza a amarração define se ela é flexível ou rígida.
+	- A variável é do tipo float.
+	- A variável se chama j.
+	- A variável ocupa um espaço na memória em dado endereço.
+	- À variável é atribuido o valor inicial de 9.2
+	- A variável é subtraída por 1.8
+	- A varíavel tempo um tempo de vida.
+	- a varíavel faz /não faz parte de um escopo.
+
+02. Em C++ os identificadores não possuem limite de tamanho. Em C os identificadores são CaseSensitives, o que pode ser ruim devido à facilidade para se confundir identificadores que só se diferem por serem maiúsculos ou minusculos. C e C++ permitem que sejam feitas declarações e definições dentro de blocos. Não é possível utilizar palavras-chave (main, int ,printf) como identificadores, já que são reservadas para uso especial. Segundo o site da Microsoft, somente os 2048 primeiros caracteres de identificadores são significativos. O nome resultante, incluindo as informações do tipo não podem ter mais que 2048 caracteres juntos.
+
+03. São duas váriaveis que podem ser usadas para acessar o mesmo endereço na memória. No C++ e C, elas podem ser geradas utilizando-se ponteiros. Entretanto, os aliases são prejudiciais à legibilidade pois os leitores do código devem se lembrar para onde esses aliases estão 'apontando', no caso, para qual endereço na memória eles fazem referência.
+
+04. Vinculação: é a determinação de uma referência ou associação entre uma entidade de um programa(variáveis, rotinas e sentenças) e seus atributos. A vinculação é um conceito central na definição de linguagens de programação. LP se diferem quanto ao número de entidades que podem lidar, quanto ao tempo em que tais vinculações se dão e quanto à estabilidade destas vinculações.
+Tempo de Vinculação: o momento em que ocorre uma vinculação. Vinculações podem ocorrer em tempo de projeto da linguagem, tempo de implementação da linguagem, tempo de compilação, tempo de carga (loader), tempo de ligação (linker), ou tempo de execução.
+
+05. Uma vinculação é estática se ocorre antes do tempo de execução e nunca muda durante o tempo de vida do programa. Se a vinculação ocorre primeiramente durante o tempo de execução ou pode mudar durante o curso da execução do programa, a vinculação é dita dinâmica.
+
+06. Uma declaração implícita é um mecanismo default para a especificação de tipos e ocorre na primeira vez que uma variável é encontrada. A maioria das linguagens de programação projetadas a partir de 1960 requerem declaração explícita. Como exemplo temos: FORTRAN, PL/I, Basic e Pearl, são LPs que contém mecanismos de declaração implícita.
+
+07.
+
+08.  Tempo de Compilação, de Ligação, de Carga do Progama e de Execução.
+
+09.
+
+10.
+
+11. Um vínculo  estático aponta para a abse de uma instância do registro de ativação de uma ativação do pai estático. Uma cadeia estática é uma cadeia de vínculos estáticos que conecta certas instâncias de registros de ativação. A cadeia estática conecta todos os ancestrais estáticos de um subprograma em execução. Ela é utilizada para implementar acesso as varáveis não locais.

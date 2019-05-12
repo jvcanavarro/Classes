@@ -109,11 +109,37 @@ class Graph:
 		vertices_impares = 0
 		for vertice in get_vertices():
 			if vertice_grau(vertice) % 2 == 1: # ímpar
-			v	ertices_impares += 1
+				vertices_impares += 1
 		return vertices_impares == 2
 
-	def show_matrix_format(self):
-		pass
+	def componentes_conectados(self):
+		componentes = []
+		vertices = get_vertices()
 
-	def show_list_format(self):
-		pass
+		while len(vertices) != 0:
+			vertice_atual = vertices.pop()
+			fila = [vertice_atual] # Pilha
+			vertices_visitados = [vertice_atual]
+			while len(fila) != 0:
+				inicio = fila[0]
+				fila.remove(inicio)
+				vizinhos = self.__graph[inicio]
+				for vizinho, _ in vizinhos.iteritems():
+					if vizinho not in vertices_visitados:
+						fila.append(vizinho)
+						vertices_visitados.append(vizinho)
+						vertices.remove(vizinho)
+			componentes.append(vertices_visitados)
+
+	def mostra_matriz(self):
+		for i in self.__graph:
+			for j in i:
+				print(j, end=' ')
+			print(' ')
+
+	def mostra_lista(self):
+		for i in range(self.__graph):
+			print('%d: '% (i + 1), end=' ')
+			for j in self.__graph[i]:
+				print('%d-> '% (j + 1), end=' ')
+			print(' ')
