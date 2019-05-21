@@ -1,0 +1,112 @@
+1. O que faz a biblioteca math?
+2. O que faz a biblioteca numpy?
+3. Para que é declarado inf=1e-20?
+4. A função blank(V) testa se uma linha V deve ser ignorada.
+Quais as duas condições que são verificadas? 
+5. A função x2float(n) transforma valores para float.
+O que acontece se o valor passado não é float? 
+Considerando loadCsv():  
+6. Na linha  "DATA = list(lines) # [1:]".
+O que ocorre se tiramos # de comentário? 
+7. O que faz o comando DATA.pop(0) ?
+8. Quem é o DATA[2]? Quem é o DATA[i]? 
+9. Para que serve random.seed(37) ? 
+10. Explique a função splitData()? O que entra e o que sai? 
+como ela funciona? 
+11. colClass=[lin[-1] for lin in DATA]. 
+coleta a última coluna, programe esta linha com zip(*), sem for? 
+12. O que faz o comando set(colClass)? 
+13. O faz esta linha:
+ groups[c]= [lin for lin in DATA if lin[-1]==c]? 
+14. Qual o resultado de print(groupByClass(Data1))? 
+15. O que faz o exit(1) na linha comentada? 
+16. print('stdev:', numpy.std(vet), stdev(vet)).
+   Cheque se o desvio padrão do numpy da o mesmo
+   resultado deste que foi codificado? 
+17. Qual a formula do desvio padrão?
+18. print(list(zip(* Data1))). Qual o resultado deste print? 
+19. list(zip(*DATA))[:-1] o que retorna este comando? 
+20. medDevCol(DATA) retorna o que? 
+21. O que retorna modByClass() ? 
+22. O que retorna medDevCol(Data1)?
+23. O que retorna modByClass(Data1)?
+24. "Gaussian Naive Bayes" o que é? 
+25. O que retorna prob(5, 7, 1)? O que significa? 
+26. Qual a formula que prob(x,m,d) implementa? 
+27. O que faz o inf nesta formula? 
+28. De um exemplo, de um modelo de Probabilidades gerado por modByClass() ? 
+29. Qual formula que o runModelo() implementa? 
+30. runModelo(modByClass(Data1),[1,2])) o que faz? 
+31. Aplicando naive bayes a partir de Data1 no 
+vetor [1,2] resulta em? 
+32. Aplicando naive bayes a partir de Data1 no 
+vetor [3,1] resulta em? 
+33. o que faz predict(modProb, vet)? 
+34. max([(1,2.2), (3,3.4), (0,6.1), (7,1.0)], key=lambda x:x[1]))
+retorna o que ? 
+35. Em return maxClass[0], porque o [0]? 
+36. O que faz a função predictSet(modProb, testSet)? 
+37. O que entra e o que sai de getAccuracy()?
+38. Conforme o codigo do knn, rescreva o getAccuracy() sem o for, use
+ compreensão de listas? 
+50. O que faz o módulo re ? 
+51. O que é uma função de alta ordem, cite 2 exemplos?
+52. O que é a função lambda? para que serve? 
+53. O que é uma avaliação lazy? 
+54. O que faz a função filter? 
+55. porque precisamos usar list(filter())?
+56. O que um iterator em Python?  
+An iterator is an object with a  __next__ (Python 3) method.
+Whenever you use a for loop, or map, or a list comprehension, etc.
+in Python, the next method is called automatically to get 
+the next item from the iterator,...
+57. A função remNull(Xs) filtra o que? 
+58. O que faz a função str.split()?
+59. O que faz a funçaõ re.split('@|,|{|}| ', str)? 
+60. Em Python um string pode ocupar varias linhas? se sim como?  
+61. Como quebrar um string em linhas de texto? 
+62. Qual a diferença entre str.strip() e str.split()? 
+63. Como remover um caracter de fim de linha de um string?
+64. Como remover brancos do inicio e do fim de uma string? 
+65. O arquivo texto é uma lista de linhas. Como termina cada linha?
+66. A função re.split('@|,|{|}| ',line) faz o que? 
+67. Num arquivo .arff o que significam os caracteres % e @ no inicio
+de uma linha?
+68. Um arquivo .arff tem duas grandes partes quais? 
+69. Num arquivo .arff como saber onde começam os dados? 
+70. Num arquivo .arff qual é o separador entre o valores de uma linha? 
+71. Qual a tradução da palavra parse? 
+72. O que faz if dom[ 0][0]=='relation': del dom[0]   ?
+73. O que faz if dom[-1][0]=='data'    : del dom[-1]  ? 
+74. Porque as as palavras relation e data estariam nas posições 0 e -1?
+75. for at in dom:attrV[at[1]]=at[2:] o que faz? porque o nome attrV? 
+76. Qual o resultado de print(attrV)? 
+77. Qual o resultado de print(attrV.keys())?
+78. Qual o resultado de print(attrV.values())?
+79. attrI=dict(zip(attrs, range(len(attrs))))  o que faz? 
+80. Qual o resultado de print(attrI)? porque o nome attrI
+81. Qual o resultado de print(prob(data,('outlook','sunny')))?
+82. Qual o resultado de print(prob(data,('play','yes')))?
+83. O que faz a função prob(Data,AV). O que entra o que sai? Porque AV? 
+84. O que faz vet=list(zip(* data))[I]?
+85. O que retorna a função [1,2,2,2,2,21,1,1].count(1)?
+86. O que faz  A,Val=AV1;I=attrI[A]; porque AV? 
+87. O que faz dat=[v for v in data if v[I]==Val] ? 
+88. O que retorna probC(data,('play','yes'), ('outlook','sunny') )?
+89. O que faz a função probC()? O que entra o que sai? 
+90. Que função é implementada em inferNBayes(data,L,AV)? 
+91. Quais são os parametros em inferNBayes(data,L,AV) ? 
+92. Qual o resultado dos prints?
+print(inferNBayes(data,L1,('play','yes')))
+print(inferNBayes(data,L1,('play','no')) )     
+print(inferNBayes(data,L2,('play','yes')))
+print(inferNBayes(data,L2,('play','no')))  
+93. O que retorna do inferNBayes(data,L,AV) ?
+94. Qual o resultado dos prints?
+print(classifyNBayes(data,L1,('play',None)))     
+print(classifyNBayes(data,L2,('play',None)))
+95. O que retorna do classifyNBayes(data,L,AV) ?
+96. D=list(attrI.keys())[:-1] o que faz? 
+97. Porque o :-1 em list(attrI.keys())[:-1] ? 
+98. real=list(zip(* data))[-1] o que faz ? 
+99. Nesta forma de rodar o que esta sendo o conjunto de treino? 
