@@ -1,49 +1,50 @@
-from collections import defaultdict as default
-
-class Digraph:
-
-	def __init__(self, digraph:dict = None) -> None:
-		if not digraph:
-			digraph = {}
-		self.digraph = digraph
-
-	def get_vertices(self) -> list:
-		return list(self.digraph.keys())
-
-	def get_arestas(self) -> list:
-		return self.gera_arestas()
-
-	def set_vertice(self, vertice) -> None:
-		if vertice not in self.digraph:
-			self.digraph[vertice] = []
-
-	def set_aresta(self, aresta) -> None:
-		aresta = set(aresta) # Set = Conjunto de elementos únicos.
-		vertice = aresta.pop()
-		if aresta:
-			vertice2 = aresta.pop()
-		else:
-			vertice2 = vertice
-		if vertice in self.digraph:
-			self.digraph[vertice].append(vertice2)
-		else:
-			self.digraph[vertice] = [vertice2]
 
 
-grafo = {1 : {1,2,3}, 2 : {3}, 3 : {1}}
+class Digraph(object):
 
-graph = {}
-s = dict((k,(r:0)) for k,r in grafo.items())
-print(s)
+    def __init__(self, digraph: dict = {}) -> None:
+        self.digraph = digraph
+        print(self.digraph)
 
-# graph = default(dict)
+    def get_vertices(self) -> set:
+        return set(self.digraph.keys())
+
+    def get_edges(self) -> list:
+        return self.create_edges()
+
+    def set_vertice(self, vertice: int) -> None:
+        if vertice not in self.digraph:
+            self.digraph[vertice] = []
+
+    def set_edges(self, edge) -> None:
+        edge = set(edge)  # Set = Conjunto de elementos únicos.
+        vertice = edge.pop()
+        if edge:
+            vertice2 = edge.pop()
+        else:
+            vertice2 = vertice
+        if vertice in self.digraph:
+            self.digraph[vertice].append(vertice2)
+        else:
+            self.digraph[vertice] = [vertice2]
+
+    def create_edges(self) -> list:
+        pass
+
+
+graph = {1: {1, 2, 3}, 2: {3}, 3: {1}}
+
 # for key, value in grafo.items():
+# 	print('key', key)
+# 	print('value', value)
 # 	graph[key] = {el:0 for el in value}
 
-# print(graph)
 
+digrafo = Digraph(graph)
 
-digrafo = Digraph(grafo)
 digrafo.set_vertice(4)
+
+print(digrafo.get_vertices())
+
 
 # https://codereview.stackexchange.com/questions/163414/adjacency-list-graph-representation-on-python
