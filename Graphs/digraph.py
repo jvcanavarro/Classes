@@ -27,13 +27,13 @@ class Digraph(object): # Adj. List
         self.digraph = defaultdict(dict, digraph)
 
     def matrix_representation(self) -> list:
-        n = len(adj_list)
-        adj_matrix = np.nan * np.ones((n,n))
-        np.fill_diagonal(adj_matrix,0)
-        for i in range(n):
-            for j, w in adj_list[i]:
-                adj_matrix[i,j] = w
-        return adj_matrix
+        n = len(self.digraph)
+        self.matrix_digraph = np.zeros(shape=(n, n))
+        print(self.digraph)            
+        for edge in self.get_edges():
+            self.matrix_digraph[edge[0] - 1, edge[1] - 1] = 1
+
+        print(self.matrix_digraph)
 
     def get_vertices(self) -> set:
         return set(self.digraph.keys())
@@ -72,7 +72,7 @@ class Digraph(object): # Adj. List
         return len(self.digraph)
 
 # graph = {1:{}, 2:{}}
-graph = {1: {1, 2, 3}, 2: {3}, 3: {1: 0}}
+graph = {1: {1, 2, 3}, 2: {3}, 3: {1: 0}, 5: {}}
 digraph = Digraph(graph)
 
 # edge = (2, 1, 0)
@@ -83,3 +83,4 @@ digraph.set_edges(edge)
 # digraph.create_edges()
 print(digraph.get_edges())
 print(digraph.get_vertices())
+digraph.matrix_representation()
