@@ -2,6 +2,10 @@ import numpy as np
 import click
 
 
+def bit_to_string(bits):
+    return ''.join(chr(int(''.join(bit), 2)) for bit in zip(*[iter(bits)]*7))
+
+
 def generate_key(length):
     return np.random.randint(2, size=length)
 
@@ -15,13 +19,10 @@ def binarize_sentence(sentence):
     return ''.join(bit[2:] for bit in sentence)
 
 
-def string_sentence(sentence):
-    sentence = [str(bit) for bit in sentence]
+def message_to_string(sentence):
+    sentence = list(map(str, sentence))
     sentence = [''.join(sentence[i:i + 8]) for i in range(0, len(sentence), 7)]
-    print(sentence)
-    print(int(sentence[0], 2))
-    return ''.join(map(lambda bit: int(bit, 2), sentence))
-
+    return ''.join(map(bit_to_string, sentence))
 
 
 @click.command()
@@ -37,11 +38,15 @@ def onetime_pad(message, sentence):
     enc_message = encrypt_message(message, key)
     print(enc_message, '| Encrypted Message')
 
+    if sentence:
+        print(message_to_string(enc_message))
+
     dec_message = encrypt_message(enc_message, key)
     print(dec_message, '| Decrypted Message')
 
     if sentence:
-        print(string_sentence(dec_message))
+        print(message_to_string(dec_message))
+
 
 if __name__ == '__main__':
     onetime_pad()
