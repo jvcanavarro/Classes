@@ -1,9 +1,13 @@
+import Crypto.Random
 import numpy as np
 import click
 
 
 def generate_key(length):
-    return np.random.randint(2, size=length)
+    a = Crypto.Random.get_random_bytes(length)
+    print(a)
+    return Crypto.Random.get_random_bytes(length)
+    # return np.random.randint(2, size=length)
 
 
 def encrypt_message(message, key):
@@ -21,13 +25,19 @@ def text_from_bits(bits, encoding='utf-8'):
 
 
 @click.command()
-@click.option('-m', 'message', required=True)
-def onetime_pad(message):
+@click.option('--file', type=click.File('r'))
+@click.option('--text')
+def onetime_pad(file, text):
+
+    if file:
+        text = file.read()
+        print(text.split())
 
     enc_message = []
     dec_message = []
 
-    for word in message.split():
+
+    for word in text.split():
         word = text_to_bits(word)
         key = generate_key(len(word))
 
@@ -36,8 +46,11 @@ def onetime_pad(message):
 
         dec_message[-1] = text_from_bits(dec_message[-1])
 
-        print(enc_message)
-        print(dec_message[-1], '\n')
+        # print(enc_message)
+        # print(dec_message[-1], '\n')
+
+    print("Encrypted Message: ", enc_message)
+    print("Decrypted Message: ",  ' '.join(dec_message))
 
 
 if __name__ == '__main__':
