@@ -1,5 +1,6 @@
-from collections import Counter
 from Crypto.Cipher import AES, DES3
+from Crypto.Protocol import KDF
+from collections import Counter
 from functools import reduce
 from Crypto import Random
 from operator import add
@@ -27,12 +28,10 @@ def unpad_data(data):
         return data
 
 
-def generate_aes_key(des3):
-    if des3:
-        rnd = Random.OSRNG.posix.new().read(24)
-    else:
-        rnd = Random.OSRNG.posix.new().read(AES.block_size)
-    return rnd
+def generate_key(des3, password, salt = b'madhubal'):
+    key = KDF.PBKDF1(password, salt, 16)
+    rnd = Random.OSRNG.posix.new().read(16)
+    return key
 
 
 def encrypt(key, iv, data, des3):
@@ -55,9 +54,11 @@ def decrypt(key, iv, data, des3):
 
 @click.command()
 @click.option('--des3', is_flag=True)
-def test_crypto(des3):
+@click.option('-password')
+def test_crypto(des3, password):
     msg = b"This is some super secret message.  Please don't tell anyone about it or I'll have to shoot you."
-    key = generate_aes_key(des3)
+    key = generate_key(des3, password)
+    print(key)
 
     iv1 = b"12345678"
     iv2 = b"12345679"

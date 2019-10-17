@@ -26,7 +26,7 @@ def unpad_data(data):
         return data
 
 
-def generate_aes_key():
+def generate_key():
     rnd = Random.OSRNG.posix.new().read(DES.block_size)
     return rnd
 
@@ -45,7 +45,7 @@ def decrypt(key, iv, data):
 
 def test_crypto():
     msg = b"This is some super secret message.  Please don't tell anyone about it or I'll have to shoot you."
-    key = generate_aes_key()
+    key = generate_key()
 
     iv1 = b"12345678"
     iv2 = b"12345679"
