@@ -29,7 +29,7 @@ def unpad_data(data):
 
 
 def generate_key(des3, password, salt = b'madhubal'):
-    key = KDF.PBKDF1(password, salt, 16)
+    key = KDF.PBKDF2(password, salt, 16)
     rnd = Random.OSRNG.posix.new().read(16)
     return key
 
@@ -58,24 +58,12 @@ def decrypt(key, iv, data, des3):
 def test_crypto(des3, password):
     msg = b"This is some super secret message.  Please don't tell anyone about it or I'll have to shoot you."
     key = generate_key(des3, password)
-    print(key)
 
-    iv1 = b"12345678"
-    iv2 = b"12345679"
+    iv = b"12345678"
 
-    code1 = encrypt(key, iv1, msg, des3)
-    code2 = encrypt(key, iv2, msg, des3)
+    enc_text = encrypt(key, iv, msg, des3)
 
-    # decoded1 = decrypt(key, iv1, code1)
-    # decoded2 = decrypt(key, iv2, code2)
-
-    occ_bits = map(lambda x: Counter(bin(x)[2:]), code1)
-    sum_bits1 = reduce(add, occ_bits)
-    print(sum_bits1)
-
-    occ_bits = map(lambda x: Counter(bin(x)[2:]), code2)
-    sum_bits2 = reduce(add, occ_bits)
-    print(sum_bits2)
+    dec_text = decrypt(key, iv, code)
 
 
 if __name__ == '__main__':
