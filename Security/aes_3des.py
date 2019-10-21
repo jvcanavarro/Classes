@@ -1,9 +1,6 @@
 from Crypto.Cipher import AES, DES3
 from Crypto.Protocol import KDF
-from collections import Counter
-from functools import reduce
 from Crypto import Random
-from operator import add
 import click
 
 
@@ -28,9 +25,9 @@ def unpad_data(data):
         return data
 
 
-def generate_key(des3, password, salt = b'madhubal'):
+def generate_key(des3, password, salt=b'madhubal'):
     key = KDF.PBKDF2(password, salt, 16)
-    rnd = Random.OSRNG.posix.new().read(16)
+    # rnd = Random.OSRNG.posix.new().read(16)
     return key
 
 

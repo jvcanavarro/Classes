@@ -1,6 +1,8 @@
 from os import urandom
 import click
 '''
+os.urandom(n)
+
 Return a string of n random bytes suitable for cryptographic use.
 
 This function returns random bytes from an OS-specific randomness
