@@ -27,7 +27,6 @@ def unpad_data(data):
 
 def generate_key(des3, password, salt=b'madhubal'):
     key = KDF.PBKDF2(password, salt, 16)
-    # rnd = Random.OSRNG.posix.new().read(16)
     return key
 
 
