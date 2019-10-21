@@ -7,10 +7,6 @@ def generate_key(length):
 
 
 def encrypt_message(message, key):
-    # for k, m in zip(message[:8], key[:8]):
-    #     print('k', k)
-    #     print('m', m)
-    #     print(int(k) ^ m)
     return [int(m_bit) ^ k_bit for m_bit, k_bit in zip(message, key)]
 
 
@@ -25,8 +21,8 @@ def text_from_bits(bits, encoding='utf-8'):
 
 
 @click.command()
-@click.option('--file', type=click.File('r'))
-@click.option('--text')
+@click.option('-file', type=click.File('r'))
+@click.option('-text')
 def onetime_pad(file, text):
 
     if file:

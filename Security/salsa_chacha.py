@@ -3,8 +3,10 @@ from Crypto.Random import get_random_bytes
 import click
 
 
-def generate_key():
-    return get_random_bytes()
+def generate_key(salsa):
+    if salsa:
+        return get_random_bytes(256)
+    return get_random_bytes(8)
 
 
 def encrypt(key, data):
@@ -25,11 +27,15 @@ def decrypt(key, data):
 
 
 @click.command()
+@click.option('-file', type=click.File('r'))
 @click.option('-salsa', is_flag=True)
-@click.option('-cha', is_flag=True)
-def test_crypto(salsa, cha):
-    msg = b"This is some super secret message.  Please don't tell anyone about it or I'll have to shoot you."
-    key = generate_key()
+@click.option('-text')
+def test_crypto(salsa, text, file):
+
+    if file:
+        pass
+
+    key = generate_key(salsa)
 
     enc_text = encrypt(key, msg, salsa)
 
