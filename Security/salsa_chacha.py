@@ -4,24 +4,22 @@ import click
 
 
 def generate_key(salsa):
+    return get_random_bytes(256) if salsa else get_random_bytes(8)
+
+
+def encrypt(key, data, salsa):
     if salsa:
-        return get_random_bytes(256)
-    return get_random_bytes(8)
-
-
-def encrypt(key, data):
-    if des3:
-        enc = DES3.new(key, DES3.MODE_ECB, iv)
+        enc = .new(key, .MODE_ECB)
     else:
-        enc = AES.new(key, AES.MODE_ECB, iv)
+        enc = .new(key, .MODE_ECB)
     return enc.encrypt(data)
 
 
 def decrypt(key, data):
-    if des3:
-        dec = DES3.new(key, DES3.MODE_ECB, iv)
+    if salsa:
+        dec = .new(key, .MODE_ECB)
     else:
-        dec = AES.new(key, AES.MODE_ECB, iv)
+        dec = .new(key, .MODE_ECB)
     data = dec.decrypt(data)
     return data
 
@@ -39,7 +37,7 @@ def test_crypto(salsa, text, file):
 
     enc_text = encrypt(key, msg, salsa)
 
-    dec_text = decrypt(key, enc_text)
+    dec_text = decrypt(key, enc_text, salsa)
 
 
 if __name__ == '__main__':
