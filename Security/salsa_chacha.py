@@ -4,24 +4,23 @@ import click
 
 
 def generate_key(salsa):
-    return get_random_bytes(256) if salsa else get_random_bytes(8)
+    return get_random_bytes(256) if salsa else get_random_bytes(32)
 
 
 def encrypt(key, data, salsa):
     if salsa:
-        enc = .new(key, .MODE_ECB)
+        enc = Salsa20.new(key)
     else:
-        enc = .new(key, .MODE_ECB)
-    return enc.encrypt(data)
+        enc = ChaCha20.new(key=key)
+    return enc.nonce, enc.encrypt(data)
 
 
-def decrypt(key, data):
+def decrypt(key, data, salsa):
     if salsa:
-        dec = .new(key, .MODE_ECB)
+        dec = Salsa20.new(key)
     else:
-        dec = .new(key, .MODE_ECB)
-    data = dec.decrypt(data)
-    return data
+        dec = ChaCha20.new(key=key)
+    return dec.decrypt(data)
 
 
 @click.command()
@@ -33,11 +32,17 @@ def test_crypto(salsa, text, file):
     if file:
         pass
 
+    text = b'Attack at dawn'
+
     key = generate_key(salsa)
+    print(len(key))
+    print(key)
 
-    enc_text = encrypt(key, msg, salsa)
-
+    nonce, enc_text = encrypt(key, text, salsa)
     dec_text = decrypt(key, enc_text, salsa)
+
+    print(enc_text)
+    print(dec_text)
 
 
 if __name__ == '__main__':
