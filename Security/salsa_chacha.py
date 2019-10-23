@@ -3,24 +3,26 @@ from Crypto.Random import get_random_bytes
 import click
 
 
-def generate_key(salsa):
-    return get_random_bytes(256) if salsa else get_random_bytes(32)
+def generate_key():
+    return get_random_bytes(32)
 
 
 def encrypt(key, data, salsa):
     if salsa:
-        enc = Salsa20.new(key)
+        enc = Salsa20.new(key=key)
     else:
         enc = ChaCha20.new(key=key)
-    return enc.nonce, enc.encrypt(data)
+
+    return enc.nonce + enc.encrypt(data)
 
 
 def decrypt(key, data, salsa):
     if salsa:
-        dec = Salsa20.new(key)
+        dec = Salsa20.new(key=key, nonce=data[:8])
     else:
-        dec = ChaCha20.new(key=key)
-    return dec.decrypt(data)
+        dec = ChaCha20.new(key=key, nonce=data[:8])
+
+    return dec.decrypt(data[8:])
 
 
 @click.command()
@@ -30,19 +32,17 @@ def decrypt(key, data, salsa):
 def test_crypto(salsa, text, file):
 
     if file:
-        pass
+        text = file.read()
 
-    text = b'Attack at dawn'
+    text = str.encode(text)
+    key = generate_key()
 
-    key = generate_key(salsa)
-    print(len(key))
-    print(key)
-
-    nonce, enc_text = encrypt(key, text, salsa)
+    enc_text = encrypt(key, text, salsa)
     dec_text = decrypt(key, enc_text, salsa)
 
-    print(enc_text)
-    print(dec_text)
+    print('Encrypted Text:\n', enc_text)
+    print()
+    print('Decrypted Text:\n', dec_text)
 
 
 if __name__ == '__main__':
