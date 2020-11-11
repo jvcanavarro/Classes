@@ -9,7 +9,7 @@ def create_axis(ax, coordenates, *args, **kwargs):
 		for coordenate in coordenates:
 			plt.axhline(coordenate, *args, **kwargs) # horizontal line
 
-def create_random_bit_signal(signal_length=7):
+def create_random_bit_signal(signal_length=h7):
 	return [np.random.randint(2) for bit in range(signal_length)]
 
 def dif_man(signal):
